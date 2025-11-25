@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class SettingsActivity extends AppCompatActivity {
 
     Button btnGridSize, btnSnakeSpeed, btnSnakeColor, btnBgColor, btnBackToMainMenu;
+    public static String size = "small";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
