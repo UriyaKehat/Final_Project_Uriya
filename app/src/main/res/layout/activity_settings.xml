@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <Button
+        android:id="@+id/btnGridSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grid Size"
+        app:layout_constraintBottom_toTopOf="@+id/btnSnakeSpeed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSnakeSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Snake Speed"
+        app:layout_constraintBottom_toTopOf="@+id/btnSnakeColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGridSize" />
+
+    <Button
+        android:id="@+id/btnSnakeColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snake Color"
+        app:layout_constraintBottom_toTopOf="@+id/btnBgColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSnakeSpeed" />
+
+    <Button
+        android:id="@+id/btnBgColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BackGround Color"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackToMainMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSnakeColor" />
+
+    <Button
+        android:id="@+id/btnBackToMainMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back To Main Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBgColor" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
