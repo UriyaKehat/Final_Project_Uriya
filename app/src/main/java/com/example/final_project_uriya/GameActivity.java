@@ -27,28 +27,29 @@ public class GameActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        int tileSize = 70;
         GridLayout layout = findViewById(R.id.main);
         layout.setColumnCount(10);
         layout.setRowCount(11);
-        imageMat = new ImageView[10][11];
+        imageMat = new ImageView[11][10];
         for (int i = 0; i < imageMat.length; i ++){
             for (int k = 0; k < imageMat[0].length; k ++){
                 ImageView img = new ImageView(this);
                 if (GameLogic.matGameGrid[i][k] == 0) {
                     img.setImageResource(R.drawable.gray_square);
-                    imageMat[i][k] = img;
-                    layout.addView(img);
                 }
-                if (GameLogic.matGameGrid[i][k] == 1) {
+                else if (GameLogic.matGameGrid[i][k] == 1) {
                     img.setImageResource(R.drawable.lime_square);
-                    imageMat[i][k] = img;
-                    layout.addView(img);
                 }
-                if (GameLogic.matGameGrid[i][k] == 2) {
+                else if (GameLogic.matGameGrid[i][k] == 2) {
                     img.setImageResource(R.drawable.red_square);
-                    imageMat[i][k] = img;
-                    layout.addView(img);
                 }
+                imageMat[i][k] = img;
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.width = tileSize;
+                params.height = tileSize;
+                params.setMargins(1, 1, 1, 1);
+                layout.addView(img, params);
             }
         }
     }
