@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
         layout.setColumnCount(10);
         layout.setRowCount(11);
         imageMat = new ImageView[11][10];
+        //
         for (int i = 0; i < imageMat.length; i ++){
             for (int k = 0; k < imageMat[0].length; k ++){
                 ImageView img = new ImageView(this);
@@ -52,5 +53,6 @@ public class GameActivity extends AppCompatActivity {
                 layout.addView(img, params);
             }
         }
+        //סוף בנייה ראשונית של המשחק
     }
 }
