@@ -30,10 +30,16 @@ public class GameGrid {
 
                 ImageView img = new ImageView(context);
 
-                if (matGameGrid[i][j] == GameLogic.EMPTY)
+                //נחש
+                if (matGameGrid[i][j] == GameLogic.TAIL_MARK_UP ||
+                    matGameGrid[i][j] == GameLogic.TAIL_MARK_DOWN ||
+                    matGameGrid[i][j] == GameLogic.TAIL_MARK_RIGHT ||
+                    matGameGrid[i][j] == GameLogic.TAIL_MARK_LEFT)
+                        img.setImageResource(R.drawable.lime_square);
+                //ריק
+                else if (matGameGrid[i][j] == GameLogic.EMPTY)
                     img.setImageResource(R.drawable.gray_square);
-                else if (matGameGrid[i][j] == GameLogic.SNAKE)
-                    img.setImageResource(R.drawable.lime_square);
+                //תפוח
                 else if (matGameGrid[i][j] == GameLogic.APPLE)
                     img.setImageResource(R.drawable.red_square);
 
