@@ -24,6 +24,19 @@ public class GameLogic {
     public static int rows = matGameGrid.length;
     public static int columns = matGameGrid[0].length;
     public static boolean MoveSnake(String direction) {
+        //כשהנחש לא אוכל תפוח (צריך לגדול)
+        if (direction.equals("Up") && matGameGrid[snakeHeadRow - 1][snakeHeadColumn] != APPLE ||
+                direction.equals("Down") && matGameGrid[snakeHeadRow + 1][snakeHeadColumn] != APPLE ||
+                direction.equals("Right") && matGameGrid[snakeHeadRow][snakeHeadColumn - 1] != APPLE ||
+                direction.equals("Left") && matGameGrid[snakeHeadRow][snakeHeadColumn + 1] != APPLE) {
+            matGameGrid[snakeTailRow][snakeTailColumn] = 0;
+            //הזזת זנב הנחש
+            if(matGameGrid[snakeTailRow - 1][snakeTailColumn] == TAIL_MARK_UP) snakeTailRow--;
+            else if(matGameGrid[snakeTailRow + 1][snakeTailColumn] == TAIL_MARK_DOWN) snakeTailRow++;
+            else if(matGameGrid[snakeTailRow][snakeTailColumn - 1] == TAIL_MARK_RIGHT) snakeTailColumn--;
+            else if(matGameGrid[snakeTailRow][snakeTailColumn + 1] == TAIL_MARK_LEFT) snakeTailColumn++;
+        }
+
         //בדיקת כיוון
         if (direction.equals("Up")) {
             snakeHeadRow--;
@@ -42,21 +55,9 @@ public class GameLogic {
             matGameGrid[snakeHeadRow][snakeHeadColumn] = TAIL_MARK_RIGHT;
         }
 
-        //כשהנחש לא אוכל תפוח (לא צריך לגדול)
-        if (direction.equals("Up") && matGameGrid[snakeHeadRow - 1][snakeHeadColumn] != APPLE ||
-                direction.equals("Down") && matGameGrid[snakeHeadRow + 1][snakeHeadColumn] != APPLE ||
-                direction.equals("Right") && matGameGrid[snakeHeadRow][snakeHeadColumn - 1] != APPLE ||
-                direction.equals("Left") && matGameGrid[snakeHeadRow][snakeHeadColumn + 1] != APPLE) {
-            matGameGrid[snakeTailRow][snakeTailColumn] = 0;
-            //הזזת זנב הנחש
-            if(matGameGrid[snakeTailRow - 1][snakeTailColumn] == TAIL_MARK_UP) snakeTailRow--;
-            else if(matGameGrid[snakeTailRow + 1][snakeTailColumn] == TAIL_MARK_DOWN) snakeTailRow++;
-            else if(matGameGrid[snakeTailRow][snakeTailColumn - 1] == TAIL_MARK_RIGHT) snakeTailColumn--;
-            else if(matGameGrid[snakeTailRow][snakeTailColumn + 1] == TAIL_MARK_LEFT) snakeTailColumn++;
-        }
         //תנאי עצירה יציאה מהגבולות
-        if (snakeHeadRow < 0 || snakeHeadRow >= rows ||
-                snakeHeadColumn < 0 || snakeHeadColumn >= columns) return false;
+        if (snakeHeadRow < 0 || snakeHeadRow > rows ||
+                snakeHeadColumn < 0 || snakeHeadColumn > columns) return false;
 
         //תנאי עצירה נחש נכנסס בעצמו
         if (direction.equals("Up") && matGameGrid[snakeHeadRow - 1][snakeHeadColumn] == TAIL_MARK_UP) return false;
