@@ -1,70 +1,69 @@
-
 package com.example.final_project_uriya;
 
+import java.util.LinkedList;
+
 public class GameLogic {
-    public static final int EMPTY = 0, APPLE = 1,
-                            TAIL_MARK_UP = 2,
-                            TAIL_MARK_DOWN = 3,
-                            TAIL_MARK_RIGHT = 4,
-                            TAIL_MARK_LEFT = 5;
-    public static int snakeHeadRow = 5, snakeHeadColumn = 3, snakeTailRow = 5, snakeTailColumn = 1;
-    public static int[][] matGameGrid = {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 5, 5, 5, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    };
-    public static int rows = matGameGrid.length;
-    public static int columns = matGameGrid[0].length;
+    public static final int EMPTY = 0, APPLE = 1;
+    public static final int TAIL_MARK_UP = 2, TAIL_MARK_DOWN = 3, TAIL_MARK_LEFT = 4, TAIL_MARK_RIGHT = 5;
+
+    public static int rows = 11, columns = 11;
+    public static int[][] matGameGrid = new int[rows][columns];
+
+    public static LinkedList<Point> snake = new LinkedList<>();
+    public static String currentDirection = "Right";
+
+    static {
+        // התחלת הנחש
+        snake.add(new Point(5, 3));
+        snake.add(new Point(5, 4));
+        snake.add(new Point(5, 5));
+        for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
+
+        // תפוחים
+        matGameGrid[2][8] = APPLE;
+        matGameGrid[5][8] = APPLE;
+        matGameGrid[8][8] = APPLE;
+    }
+
     public static boolean MoveSnake(String direction) {
-        //כשהנחש לא אוכל תפוח (צריך לגדול)
-        if (direction.equals("Up") && matGameGrid[snakeHeadRow - 1][snakeHeadColumn] != APPLE ||
-                direction.equals("Down") && matGameGrid[snakeHeadRow + 1][snakeHeadColumn] != APPLE ||
-                direction.equals("Right") && matGameGrid[snakeHeadRow][snakeHeadColumn - 1] != APPLE ||
-                direction.equals("Left") && matGameGrid[snakeHeadRow][snakeHeadColumn + 1] != APPLE) {
-            matGameGrid[snakeTailRow][snakeTailColumn] = 0;
-            //הזזת זנב הנחש
-            if(matGameGrid[snakeTailRow - 1][snakeTailColumn] == TAIL_MARK_UP) snakeTailRow--;
-            else if(matGameGrid[snakeTailRow + 1][snakeTailColumn] == TAIL_MARK_DOWN) snakeTailRow++;
-            else if(matGameGrid[snakeTailRow][snakeTailColumn - 1] == TAIL_MARK_RIGHT) snakeTailColumn--;
-            else if(matGameGrid[snakeTailRow][snakeTailColumn + 1] == TAIL_MARK_LEFT) snakeTailColumn++;
+        currentDirection = direction;
+        Point head = snake.getLast();
+        int newRow = head.row;
+        int newCol = head.col;
+
+        if (direction.equals("Up")) newRow--;
+        else if (direction.equals("Down")) newRow++;
+        else if (direction.equals("Left")) newCol--;
+        else if (direction.equals("Right")) newCol++;
+
+        // בדיקת גבולות
+        if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= columns) return false;
+
+        // בדיקת התנגשות בעצמי
+        if (matGameGrid[newRow][newCol] != EMPTY && matGameGrid[newRow][newCol] != APPLE)
+            return false;
+
+        boolean ateApple = (matGameGrid[newRow][newCol] == APPLE);
+
+        // הוספת ראש חדש
+        snake.addLast(new Point(newRow, newCol));
+        if (!ateApple) {
+            // הסרת זנב
+            Point tail = snake.removeFirst();
+            matGameGrid[tail.row][tail.col] = EMPTY;
         }
 
-        //בדיקת כיוון
-        if (direction.equals("Up")) {
-            snakeHeadRow--;
-            matGameGrid[snakeHeadRow][snakeHeadColumn] = TAIL_MARK_UP;
-        }
-        else if (direction.equals("Down")) {
-            snakeHeadRow++;
-            matGameGrid[snakeHeadRow][snakeHeadColumn] = TAIL_MARK_DOWN;
-        }
-        else if (direction.equals("Left")) {
-            snakeHeadColumn++;
-            matGameGrid[snakeHeadRow][snakeHeadColumn] = TAIL_MARK_LEFT;
-        }
-        else if (direction.equals("Right")) {
-            snakeHeadColumn--;
-            matGameGrid[snakeHeadRow][snakeHeadColumn] = TAIL_MARK_RIGHT;
-        }
-
-        //תנאי עצירה יציאה מהגבולות
-        if (snakeHeadRow < 0 || snakeHeadRow > rows ||
-                snakeHeadColumn < 0 || snakeHeadColumn > columns) return false;
-
-        //תנאי עצירה נחש נכנסס בעצמו
-        if (direction.equals("Up") && matGameGrid[snakeHeadRow - 1][snakeHeadColumn] == TAIL_MARK_UP) return false;
-        if (direction.equals("Down") && matGameGrid[snakeHeadRow + 1][snakeHeadColumn] == TAIL_MARK_DOWN) return false;
-        if (direction.equals("Right") && matGameGrid[snakeHeadRow][snakeHeadColumn - 1] == TAIL_MARK_RIGHT) return false;
-        if (direction.equals("Left") && matGameGrid[snakeHeadRow][snakeHeadColumn + 1] == TAIL_MARK_LEFT) return false;
+        // צביעת ראש הנחש החדש
+        if (direction.equals("Up")) matGameGrid[newRow][newCol] = TAIL_MARK_UP;
+        else if (direction.equals("Down")) matGameGrid[newRow][newCol] = TAIL_MARK_DOWN;
+        else if (direction.equals("Left")) matGameGrid[newRow][newCol] = TAIL_MARK_LEFT;
+        else if (direction.equals("Right")) matGameGrid[newRow][newCol] = TAIL_MARK_RIGHT;
 
         return true;
+    }
+
+    public static class Point {
+        public int row, col;
+        public Point(int r, int c) { row = r; col = c; }
     }
 }

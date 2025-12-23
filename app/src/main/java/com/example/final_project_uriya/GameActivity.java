@@ -1,16 +1,12 @@
-
 package com.example.final_project_uriya;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -19,25 +15,57 @@ public class GameActivity extends AppCompatActivity {
     private GameGrid gameGrid;
     private Handler handler = new Handler();
     private Runnable tickRunnable;
-    private String direction = "Left";
+
+    // כיוון הנוכחי של המשחק
+    private String nextDirection = "Right";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        // כפתורים
         btnUp = findViewById(R.id.btnUp);
         btnDown = findViewById(R.id.btnDown);
         btnLeft = findViewById(R.id.btnLeft);
         btnRight = findViewById(R.id.btnRight);
-        gridLayout = findViewById(R.id.gridLayout);
-        gameGrid = new GameGrid(this, gridLayout, GameLogic.rows, GameLogic.columns, 70);
 
+        // Grid
+        gridLayout = findViewById(R.id.gridLayout);
+        gameGrid = new GameGrid(this, gridLayout, GameLogic.rows, GameLogic.columns, 85);
+
+        // הצגת לוח התחלתי
         gameGrid.buildGrid(GameLogic.matGameGrid);
 
-        btnUp.setOnClickListener(v -> direction = "Up");
-        btnDown.setOnClickListener(v -> direction = "Down");
-        btnLeft.setOnClickListener(v -> direction = "Left");
-        btnRight.setOnClickListener(v -> direction = "Right");
+        // מאזיני כפתורים
+        btnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!nextDirection.equals("Down"))
+                    nextDirection = "Up";
+            }
+        });
+        btnDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!nextDirection.equals("Up"))
+                    nextDirection = "Down";
+            }
+        });
+        btnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!nextDirection.equals("Left"))
+                    nextDirection = "Right";
+            }
+        });
+        btnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!nextDirection.equals("Right"))
+                    nextDirection = "Left";
+            }
+        });
 
         startTimer();
     }
@@ -46,18 +74,24 @@ public class GameActivity extends AppCompatActivity {
         tickRunnable = new Runnable() {
             @Override
             public void run() {
-                boolean alive = GameLogic.MoveSnake(direction);
 
-                //תנאי עצירה
+                // הזזת הסנייק
+                boolean alive = GameLogic.MoveSnake(nextDirection);
+
+                // עצירה אם מת
                 if (!alive) {
                     handler.removeCallbacks(tickRunnable);
                     return;
                 }
 
+                // עדכון לוח
                 gameGrid.buildGrid(GameLogic.matGameGrid);
+
+                // לולאת זמן מחדש
                 handler.postDelayed(this, 500);
             }
         };
+
         handler.postDelayed(tickRunnable, 500);
     }
 
