@@ -53,28 +53,32 @@ public class GameActivity extends AppCompatActivity {
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextDirection = "Up";
+                if (!nextDirection.equals("Down"))
+                    nextDirection = "Up";
             }
         });
         //
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextDirection = "Down";
+                if (!nextDirection.equals("Up"))
+                    nextDirection = "Down";
             }
         });
         //
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextDirection = "Right";
+                if (!nextDirection.equals("Left"))
+                    nextDirection = "Right";
             }
         });
         //
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextDirection = "Left";
+                if (!nextDirection.equals("Right"))
+                    nextDirection = "Left";
             }
         });
 
