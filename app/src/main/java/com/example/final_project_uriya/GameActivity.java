@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
         // הצגת לוח התחלתי
         gameGrid.buildGrid(GameLogic.matGameGrid);
 
-        // מאזיני כפתורים
+        //click listeners
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,28 +49,28 @@ public class GameActivity extends AppCompatActivity {
                 showLargeToast("Restart");
             }
         });
-
+        //
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nextDirection = "Up";
             }
         });
-
+        //
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nextDirection = "Down";
             }
         });
-
+        //
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nextDirection = "Right";
             }
         });
-
+        //
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                // הזזת הסנייק
+                // הזזת הנחש
                 boolean alive = GameLogic.MoveSnake(nextDirection);
 
                 // עצירה אם מת
@@ -106,19 +106,10 @@ public class GameActivity extends AppCompatActivity {
         handler.postDelayed(tickRunnable, SettingsActivity.speed);
     }
     private void restartGame() {
-        // עצירת הטיימר
         handler.removeCallbacks(tickRunnable);
-
-        // איפוס הלוגיקה
         GameLogic.resetGame();
-
-        // איפוס כיוון
         nextDirection = "Right";
-
-        // בניית המסך מחדש
         gameGrid.buildGrid(GameLogic.matGameGrid);
-
-        // הפעלת הטיימר מחדש
         startTimer();
     }
 
@@ -130,13 +121,12 @@ public class GameActivity extends AppCompatActivity {
     private void showLargeToast(String message) {
         Toast toast = Toast.makeText(GameActivity.this, message, Toast.LENGTH_SHORT);
 
-        // יצירת TextView מותאם
         TextView textView = new TextView(GameActivity.this);
         textView.setText(message);
-        textView.setTextSize(50); // גודל גדול יותר
+        textView.setTextSize(50);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setPadding(20, 20, 20, 20);
-        textView.setBackgroundColor(0x88000000); // חצי שקוף רקע
+        textView.setBackgroundColor(0x88000000);
 
         toast.setView(textView);
         toast.show();
