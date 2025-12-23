@@ -19,9 +19,9 @@ public class GameLogic {
 
     static {
         // התחלת הנחש
+        snake.add(new Point(5, 2));
         snake.add(new Point(5, 3));
         snake.add(new Point(5, 4));
-        snake.add(new Point(5, 5));
         for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
 
         // תפוחים התחלתיים
@@ -92,5 +92,25 @@ public class GameLogic {
     public static class Point {
         public int row, col;
         public Point(int r, int c) { row = r; col = c; }
+    }
+
+    public static void resetGame() {
+        // איפוס מטריצה
+        matGameGrid = new int[rows][columns];
+
+        // איפוס הנחש
+        snake.clear();
+        snake.add(new Point(5, 2));
+        snake.add(new Point(5, 3));
+        snake.add(new Point(5, 4));
+
+        for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
+
+        // איפוס תפוחים
+        matGameGrid[2][8] = APPLE;
+        matGameGrid[5][8] = APPLE;
+        matGameGrid[8][8] = APPLE;
+
+        currentDirection = "Right";
     }
 }

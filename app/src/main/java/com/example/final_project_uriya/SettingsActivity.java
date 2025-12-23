@@ -15,6 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     Button btnGridSize, btnSnakeSpeed, btnSnakeColor, btnBgColor, btnBackToMainMenu;
     public static String size = "small";
+    public static int speed = 400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

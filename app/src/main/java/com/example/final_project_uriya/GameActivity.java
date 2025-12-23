@@ -1,10 +1,13 @@
 package com.example.final_project_uriya;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,32 +42,39 @@ public class GameActivity extends AppCompatActivity {
         gameGrid.buildGrid(GameLogic.matGameGrid);
 
         // מאזיני כפתורים
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartGame();
+                showLargeToast("Restart");
+            }
+        });
+
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!nextDirection.equals("Down"))
-                    nextDirection = "Up";
+                nextDirection = "Up";
             }
         });
+
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!nextDirection.equals("Up"))
-                    nextDirection = "Down";
+                nextDirection = "Down";
             }
         });
+
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!nextDirection.equals("Left"))
-                    nextDirection = "Right";
+                nextDirection = "Right";
             }
         });
+
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!nextDirection.equals("Right"))
-                    nextDirection = "Left";
+                nextDirection = "Left";
             }
         });
 
@@ -81,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
 
                 // עצירה אם מת
                 if (!alive) {
-                    handler.removeCallbacks(tickRunnable);
+                    showLargeToast("You Lose");
                     return;
                 }
 
@@ -89,16 +99,46 @@ public class GameActivity extends AppCompatActivity {
                 gameGrid.buildGrid(GameLogic.matGameGrid);
 
                 // לולאת זמן מחדש
-                handler.postDelayed(this, 500);
+                handler.postDelayed(this, SettingsActivity.speed);
             }
         };
 
-        handler.postDelayed(tickRunnable, 500);
+        handler.postDelayed(tickRunnable, SettingsActivity.speed);
+    }
+    private void restartGame() {
+        // עצירת הטיימר
+        handler.removeCallbacks(tickRunnable);
+
+        // איפוס הלוגיקה
+        GameLogic.resetGame();
+
+        // איפוס כיוון
+        nextDirection = "Right";
+
+        // בניית המסך מחדש
+        gameGrid.buildGrid(GameLogic.matGameGrid);
+
+        // הפעלת הטיימר מחדש
+        startTimer();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(tickRunnable);
+    }
+    private void showLargeToast(String message) {
+        Toast toast = Toast.makeText(GameActivity.this, message, Toast.LENGTH_SHORT);
+
+        // יצירת TextView מותאם
+        TextView textView = new TextView(GameActivity.this);
+        textView.setText(message);
+        textView.setTextSize(50); // גודל גדול יותר
+        textView.setTypeface(Typeface.DEFAULT_BOLD);
+        textView.setPadding(20, 20, 20, 20);
+        textView.setBackgroundColor(0x88000000); // חצי שקוף רקע
+
+        toast.setView(textView);
+        toast.show();
     }
 }
