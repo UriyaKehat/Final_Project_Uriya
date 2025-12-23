@@ -1,8 +1,11 @@
 package com.example.final_project_uriya;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class GameLogic {
+
     public static final int EMPTY = 0, APPLE = 1;
     public static final int TAIL_MARK_UP = 2, TAIL_MARK_DOWN = 3, TAIL_MARK_LEFT = 4, TAIL_MARK_RIGHT = 5;
 
@@ -12,6 +15,8 @@ public class GameLogic {
     public static LinkedList<Point> snake = new LinkedList<>();
     public static String currentDirection = "Right";
 
+    private static Random random = new Random();
+
     static {
         // התחלת הנחש
         snake.add(new Point(5, 3));
@@ -19,7 +24,7 @@ public class GameLogic {
         snake.add(new Point(5, 5));
         for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
 
-        // תפוחים
+        // תפוחים התחלתיים
         matGameGrid[2][8] = APPLE;
         matGameGrid[5][8] = APPLE;
         matGameGrid[8][8] = APPLE;
@@ -47,10 +52,14 @@ public class GameLogic {
 
         // הוספת ראש חדש
         snake.addLast(new Point(newRow, newCol));
+
         if (!ateApple) {
             // הסרת זנב
             Point tail = snake.removeFirst();
             matGameGrid[tail.row][tail.col] = EMPTY;
+        } else {
+            // אם אכל תפוח, צור תפוח חדש רנדומלי
+            createRandomApple();
         }
 
         // צביעת ראש הנחש החדש
@@ -60,6 +69,24 @@ public class GameLogic {
         else if (direction.equals("Right")) matGameGrid[newRow][newCol] = TAIL_MARK_RIGHT;
 
         return true;
+    }
+
+    // יצירת תפוח חדש רנדומלי
+    private static void createRandomApple() {
+        ArrayList<Point> emptyCells = new ArrayList<>();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (matGameGrid[i][j] == EMPTY) {
+                    emptyCells.add(new Point(i, j));
+                }
+            }
+        }
+
+        if (emptyCells.size() == 0) return; // אין מקום להוסיף תפוח
+
+        Point chosen = emptyCells.get(random.nextInt(emptyCells.size()));
+        matGameGrid[chosen.row][chosen.col] = APPLE;
     }
 
     public static class Point {

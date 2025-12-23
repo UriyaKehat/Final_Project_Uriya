@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Button btnUp, btnDown, btnLeft, btnRight;
+    private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
     private GridLayout gridLayout;
     private GameGrid gameGrid;
     private Handler handler = new Handler();
@@ -25,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // כפתורים
+        btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
         btnDown = findViewById(R.id.btnDown);
         btnLeft = findViewById(R.id.btnLeft);
