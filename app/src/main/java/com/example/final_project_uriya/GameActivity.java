@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity {
 
+
     private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
     private GridLayout gridLayout;
     private GameGrid gameGrid;
@@ -26,7 +27,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         // כפתורים
         btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
@@ -81,8 +81,7 @@ public class GameActivity extends AppCompatActivity {
                     nextDirection = "Left";
             }
         });
-
-        startTimer();
+        restartGame();
     }
 
     private void startTimer() {
@@ -103,11 +102,11 @@ public class GameActivity extends AppCompatActivity {
                 gameGrid.buildGrid(GameLogic.matGameGrid);
 
                 // לולאת זמן מחדש
-                handler.postDelayed(this, SettingsActivity.speed);
+                handler.postDelayed(this, SettingsActivity.snakeSpeed);
             }
         };
 
-        handler.postDelayed(tickRunnable, SettingsActivity.speed);
+        handler.postDelayed(tickRunnable, SettingsActivity.snakeSpeed);
     }
     private void restartGame() {
         handler.removeCallbacks(tickRunnable);

@@ -25,9 +25,7 @@ public class GameLogic {
         for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
 
         // תפוחים התחלתיים
-        matGameGrid[2][8] = APPLE;
-        matGameGrid[5][8] = APPLE;
-        matGameGrid[8][8] = APPLE;
+        LayApples();
     }
 
     public static boolean MoveSnake(String direction) {
@@ -107,10 +105,37 @@ public class GameLogic {
         for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
 
         // איפוס תפוחים
-        matGameGrid[2][8] = APPLE;
-        matGameGrid[5][8] = APPLE;
-        matGameGrid[8][8] = APPLE;
+        LayApples();
 
         currentDirection = "Right";
+    }
+
+    public static void LayApples()
+    {
+        if (SettingsActivity.appleAmountValue == 1) {
+            matGameGrid[5][8] = APPLE;
+        }
+        if (SettingsActivity.appleAmountValue == 2) {
+            matGameGrid[4][8] = APPLE;
+            matGameGrid[6][8] = APPLE;
+        }
+        if(SettingsActivity.appleAmountValue == 3) {
+            matGameGrid[2][8] = APPLE;
+            matGameGrid[5][8] = APPLE;
+            matGameGrid[8][8] = APPLE;
+        }
+        if(SettingsActivity.appleAmountValue == 4) {
+            matGameGrid[4][8] = APPLE;
+            matGameGrid[4][6] = APPLE;
+            matGameGrid[6][6] = APPLE;
+            matGameGrid[6][8] = APPLE;
+        }
+        if(SettingsActivity.appleAmountValue == 5) {
+            matGameGrid[3][8] = APPLE;
+            matGameGrid[5][8] = APPLE;
+            matGameGrid[7][8] = APPLE;
+            matGameGrid[6][6] = APPLE;
+            matGameGrid[4][6] = APPLE;
+        }
     }
 }

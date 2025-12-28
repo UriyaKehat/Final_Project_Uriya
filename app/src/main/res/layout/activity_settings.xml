@@ -23,16 +23,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Snake Speed"
-        app:layout_constraintBottom_toTopOf="@+id/btnSnakeColor"
+        app:layout_constraintBottom_toTopOf="@+id/btnAppleAmount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGridSize" />
 
     <Button
-        android:id="@+id/btnSnakeColor"
+        android:id="@+id/btnAppleAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Snake Color"
+        android:text="Apples Amount"
         app:layout_constraintBottom_toTopOf="@+id/btnBgColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnBackToMainMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSnakeColor" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAppleAmount" />
 
     <Button
         android:id="@+id/btnBackToMainMenu"
