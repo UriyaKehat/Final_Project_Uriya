@@ -6,30 +6,41 @@ import java.util.Random;
 
 public class GameLogic {
 
+    // ★ NEW – Interface במקום Activity
+    public interface GameEventsListener {
+        void onGameWon();
+    }
+
+    private GameEventsListener listener; // ★ NEW
+
     public static final int EMPTY = 0, APPLE = 1;
-    public static final int TAIL_MARK_UP = 2, TAIL_MARK_DOWN = 3, TAIL_MARK_LEFT = 4, TAIL_MARK_RIGHT = 5;
+    public static final int TAIL_MARK_UP = 2, TAIL_MARK_DOWN = 3,
+            TAIL_MARK_LEFT = 4, TAIL_MARK_RIGHT = 5;
 
-    public static int rows = 11, columns = 11;
-    public static int[][] matGameGrid = new int[rows][columns];
+    public int rows = 11, columns = 10;
+    public int[][] matGameGrid = new int[rows][columns];
 
-    public static LinkedList<Point> snake = new LinkedList<>();
-    public static String currentDirection = "Right";
+    public LinkedList<Point> snake = new LinkedList<>();
+    public String currentDirection = "Right";
 
-    private static Random random = new Random();
+    private Random random = new Random();
 
-    static {
-        // התחלת הנחש
+    public GameLogic(GameEventsListener listener) {
+        this.listener = listener;
+
         snake.add(new Point(5, 2));
         snake.add(new Point(5, 3));
         snake.add(new Point(5, 4));
-        for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
 
-        // תפוחים התחלתיים
+        for (Point p : snake)
+            matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
+
         LayApples();
     }
 
-    public static boolean MoveSnake(String direction) {
+    public boolean MoveSnake(String direction) {
         currentDirection = direction;
+
         Point head = snake.getLast();
         int newRow = head.row;
         int newCol = head.col;
@@ -39,28 +50,26 @@ public class GameLogic {
         else if (direction.equals("Left")) newCol--;
         else if (direction.equals("Right")) newCol++;
 
-        // בדיקת גבולות
-        if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= columns) return false;
+        // גבולות
+        if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= columns)
+            return false;
 
-        // בדיקת התנגשות בעצמי
-        if (matGameGrid[newRow][newCol] != EMPTY && matGameGrid[newRow][newCol] != APPLE)
+        // התנגשות בעצמי
+        if (matGameGrid[newRow][newCol] != EMPTY &&
+                matGameGrid[newRow][newCol] != APPLE)
             return false;
 
         boolean ateApple = (matGameGrid[newRow][newCol] == APPLE);
 
-        // הוספת ראש חדש
         snake.addLast(new Point(newRow, newCol));
 
         if (!ateApple) {
-            // הסרת זנב
             Point tail = snake.removeFirst();
             matGameGrid[tail.row][tail.col] = EMPTY;
         } else {
-            // אם אכל תפוח, צור תפוח חדש רנדומלי
             createRandomApple();
         }
 
-        // צביעת ראש הנחש החדש
         if (direction.equals("Up")) matGameGrid[newRow][newCol] = TAIL_MARK_UP;
         else if (direction.equals("Down")) matGameGrid[newRow][newCol] = TAIL_MARK_DOWN;
         else if (direction.equals("Left")) matGameGrid[newRow][newCol] = TAIL_MARK_LEFT;
@@ -69,73 +78,116 @@ public class GameLogic {
         return true;
     }
 
-    // יצירת תפוח חדש רנדומלי
-    private static void createRandomApple() {
+    private void createRandomApple() {
         ArrayList<Point> emptyCells = new ArrayList<>();
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (matGameGrid[i][j] == EMPTY) {
+                if (matGameGrid[i][j] == EMPTY)
                     emptyCells.add(new Point(i, j));
-                }
             }
         }
 
-        if (emptyCells.size() == 0) return; // אין מקום להוסיף תפוח
-
-        Point chosen = emptyCells.get(random.nextInt(emptyCells.size()));
-        matGameGrid[chosen.row][chosen.col] = APPLE;
+        if (emptyCells.size() == 0) {
+            if (listener != null)
+                listener.onGameWon();
+        } else {
+            Point chosen = emptyCells.get(random.nextInt(emptyCells.size()));
+            matGameGrid[chosen.row][chosen.col] = APPLE;
+        }
     }
 
-    public static class Point {
-        public int row, col;
-        public Point(int r, int c) { row = r; col = c; }
-    }
-
-    public static void resetGame() {
-        // איפוס מטריצה
+    public void resetGame() {
         matGameGrid = new int[rows][columns];
 
-        // איפוס הנחש
         snake.clear();
         snake.add(new Point(5, 2));
         snake.add(new Point(5, 3));
         snake.add(new Point(5, 4));
 
-        for (Point p : snake) matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
+        for (Point p : snake)
+            matGameGrid[p.row][p.col] = TAIL_MARK_RIGHT;
 
-        // איפוס תפוחים
         LayApples();
-
         currentDirection = "Right";
     }
 
-    public static void LayApples()
-    {
-        if (SettingsActivity.appleAmountValue == 1) {
+    public void LayApples() {
+        if (SettingsActivity.appleAmountValue == 1)
             matGameGrid[5][8] = APPLE;
-        }
         if (SettingsActivity.appleAmountValue == 2) {
             matGameGrid[4][8] = APPLE;
             matGameGrid[6][8] = APPLE;
         }
-        if(SettingsActivity.appleAmountValue == 3) {
+        if (SettingsActivity.appleAmountValue == 3) {
             matGameGrid[2][8] = APPLE;
             matGameGrid[5][8] = APPLE;
             matGameGrid[8][8] = APPLE;
         }
-        if(SettingsActivity.appleAmountValue == 4) {
+        if (SettingsActivity.appleAmountValue == 4) {
             matGameGrid[4][8] = APPLE;
             matGameGrid[4][6] = APPLE;
             matGameGrid[6][6] = APPLE;
             matGameGrid[6][8] = APPLE;
         }
-        if(SettingsActivity.appleAmountValue == 5) {
+        if (SettingsActivity.appleAmountValue == 5) {
             matGameGrid[3][8] = APPLE;
             matGameGrid[5][8] = APPLE;
             matGameGrid[7][8] = APPLE;
             matGameGrid[6][6] = APPLE;
             matGameGrid[4][6] = APPLE;
+
+            //
+            matGameGrid[0][0] = APPLE;
+            matGameGrid[0][1] = APPLE;
+            matGameGrid[0][2] = APPLE;
+            matGameGrid[0][3] = APPLE;
+            matGameGrid[0][4] = APPLE;
+            matGameGrid[0][5] = APPLE;
+            matGameGrid[0][6] = APPLE;
+            matGameGrid[0][7] = APPLE;
+            matGameGrid[0][8] = APPLE;
+            matGameGrid[0][9] = APPLE;
+
+            matGameGrid[1][0] = APPLE;
+            matGameGrid[1][1] = APPLE;
+            matGameGrid[1][2] = APPLE;
+            matGameGrid[1][3] = APPLE;
+            matGameGrid[1][4] = APPLE;
+            matGameGrid[1][5] = APPLE;
+            matGameGrid[1][6] = APPLE;
+            matGameGrid[1][7] = APPLE;
+            matGameGrid[1][8] = APPLE;
+            matGameGrid[1][9] = APPLE;
+
+            matGameGrid[2][0] = APPLE;
+            matGameGrid[2][1] = APPLE;
+            matGameGrid[2][2] = APPLE;
+            matGameGrid[2][3] = APPLE;
+            matGameGrid[2][4] = APPLE;
+            matGameGrid[2][5] = APPLE;
+            matGameGrid[2][6] = APPLE;
+            matGameGrid[2][7] = APPLE;
+            matGameGrid[2][8] = APPLE;
+            matGameGrid[2][9] = APPLE;
+
+            matGameGrid[3][0] = APPLE;
+            matGameGrid[3][1] = APPLE;
+            matGameGrid[3][2] = APPLE;
+            matGameGrid[3][3] = APPLE;
+            matGameGrid[3][4] = APPLE;
+            matGameGrid[3][5] = APPLE;
+            matGameGrid[3][6] = APPLE;
+            matGameGrid[3][7] = APPLE;
+            matGameGrid[3][9] = APPLE;
+        }
+    }
+
+    public static class Point {
+        public int row, col;
+        public Point(int r, int c) {
+            row = r;
+            col = c;
         }
     }
 }

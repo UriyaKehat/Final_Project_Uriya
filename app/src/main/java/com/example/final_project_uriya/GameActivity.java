@@ -3,7 +3,6 @@ package com.example.final_project_uriya;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -11,7 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity
+        implements GameLogic.GameEventsListener { // ★ NEW
 
 
     private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
@@ -19,68 +19,53 @@ public class GameActivity extends AppCompatActivity {
     private GameGrid gameGrid;
     private Handler handler = new Handler();
     private Runnable tickRunnable;
+    private boolean gameStopped = false;
 
-    // כיוון הנוכחי של המשחק
+    private GameLogic gamelogic; // ★ CHANGED
     private String nextDirection = "Right";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        // כפתורים
+
+        // ★ CHANGED – יצירה נכונה עם listener
+        gamelogic = new GameLogic(this);
+
         btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
         btnDown = findViewById(R.id.btnDown);
         btnLeft = findViewById(R.id.btnLeft);
         btnRight = findViewById(R.id.btnRight);
 
-        // Grid
         gridLayout = findViewById(R.id.gridLayout);
-        gameGrid = new GameGrid(this, gridLayout, GameLogic.rows, GameLogic.columns, 85);
+        gameGrid = new GameGrid(this, gridLayout,
+                gamelogic.rows, gamelogic.columns, 85);
 
-        // הצגת לוח התחלתי
-        gameGrid.buildGrid(GameLogic.matGameGrid);
+        gameGrid.buildGrid(gamelogic.matGameGrid);
 
-        //click listeners
-        btnRestart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                restartGame();
-                showLargeToast("Restart");
-            }
+        btnRestart.setOnClickListener(v -> restartGame());
+
+        btnUp.setOnClickListener(v -> {
+            if (!nextDirection.equals("Down"))
+                nextDirection = "Up";
         });
-        //
-        btnUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!nextDirection.equals("Down"))
-                    nextDirection = "Up";
-            }
+
+        btnDown.setOnClickListener(v -> {
+            if (!nextDirection.equals("Up"))
+                nextDirection = "Down";
         });
-        //
-        btnDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!nextDirection.equals("Up"))
-                    nextDirection = "Down";
-            }
+
+        btnLeft.setOnClickListener(v -> {
+            if (!nextDirection.equals("Right"))
+                nextDirection = "Left";
         });
-        //
-        btnRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!nextDirection.equals("Left"))
-                    nextDirection = "Right";
-            }
+
+        btnRight.setOnClickListener(v -> {
+            if (!nextDirection.equals("Left"))
+                nextDirection = "Right";
         });
-        //
-        btnLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!nextDirection.equals("Right"))
-                    nextDirection = "Left";
-            }
-        });
+
         restartGame();
     }
 
@@ -89,49 +74,69 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                // הזזת הנחש
-                boolean alive = GameLogic.MoveSnake(nextDirection);
+                if (gameStopped) return;
 
-                // עצירה אם מת
+                boolean alive = gamelogic.MoveSnake(nextDirection);
+
                 if (!alive) {
+                    gameStopped = true;
+                    stopTimer();
                     showLargeToast("You Lose");
                     return;
                 }
 
-                // עדכון לוח
-                gameGrid.buildGrid(GameLogic.matGameGrid);
-
-                // לולאת זמן מחדש
-                handler.postDelayed(this, SettingsActivity.snakeSpeed);
+                gameGrid.buildGrid(gamelogic.matGameGrid);
+                if (!gameStopped) {         // ★ NEW GUARD
+                    handler.postDelayed(this, SettingsActivity.snakeSpeed);
+                }
             }
         };
 
         handler.postDelayed(tickRunnable, SettingsActivity.snakeSpeed);
     }
+
+    public void stopTimer() {
+        if (tickRunnable != null) {
+            handler.removeCallbacks(tickRunnable);
+        }
+    }
+
+
     private void restartGame() {
-        handler.removeCallbacks(tickRunnable);
-        GameLogic.resetGame();
+        stopTimer();
+        gameStopped = false;
+        gamelogic.resetGame();
         nextDirection = "Right";
-        gameGrid.buildGrid(GameLogic.matGameGrid);
+        gameGrid.buildGrid(gamelogic.matGameGrid);
         startTimer();
+        showLargeToast("Start");
+    }
+
+    // ★ NEW – callback מה־GameLogic
+    @Override
+    public void onGameWon() {
+        gameStopped = true;
+        stopTimer();
+        showLargeToast("You Won!");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacks(tickRunnable);
+        stopTimer();
     }
+
     private void showLargeToast(String message) {
-        Toast toast = Toast.makeText(GameActivity.this, message, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
 
-        TextView textView = new TextView(GameActivity.this);
-        textView.setText(message);
-        textView.setTextSize(50);
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
-        textView.setPadding(20, 20, 20, 20);
-        textView.setBackgroundColor(0x88000000);
+        TextView tv = new TextView(this);
+        tv.setText(message);
+        tv.setTextSize(50);
+        tv.setTypeface(Typeface.DEFAULT_BOLD);
+        tv.setPadding(20, 20, 20, 20);
+        tv.setBackgroundColor(0x88000000);
 
-        toast.setView(textView);
+        toast.setView(tv);
         toast.show();
     }
 }
