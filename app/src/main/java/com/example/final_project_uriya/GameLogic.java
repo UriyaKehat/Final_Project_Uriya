@@ -89,8 +89,16 @@ public class GameLogic {
         }
 
         if (emptyCells.size() == 0) {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    if (matGameGrid[i][j] == APPLE)
+                        emptyCells.add(new Point(i, j));
+                }
+            }
+            if(emptyCells.size() == 1)
+            {
             if (listener != null)
-                listener.onGameWon();
+                listener.onGameWon();}
         } else {
             Point chosen = emptyCells.get(random.nextInt(emptyCells.size()));
             matGameGrid[chosen.row][chosen.col] = APPLE;
