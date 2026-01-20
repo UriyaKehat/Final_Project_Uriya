@@ -10,8 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class GameActivity extends AppCompatActivity
-        implements GameLogic.GameEventsListener { // ★ NEW
+public class GameActivity extends AppCompatActivity {
 
 
     private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
@@ -20,8 +19,9 @@ public class GameActivity extends AppCompatActivity
     private Handler handler = new Handler();
     private Runnable tickRunnable;
     private boolean gameStopped = false;
+    private SettingsActivity settingsActivity;
 
-    private GameLogic gamelogic; // ★ CHANGED
+    private GameLogic gamelogic;
     private String nextDirection = "Right";
 
     @Override
@@ -29,8 +29,8 @@ public class GameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        // ★ CHANGED – יצירה נכונה עם listener
-        gamelogic = new GameLogic(this);
+        gamelogic = new GameLogic();
+        settingsActivity = new SettingsActivity();
 
         btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
@@ -47,22 +47,22 @@ public class GameActivity extends AppCompatActivity
         btnRestart.setOnClickListener(v -> restartGame());
 
         btnUp.setOnClickListener(v -> {
-            if (!nextDirection.equals("Down"))
+            if (!gamelogic.currentDirection.equals("Down"))
                 nextDirection = "Up";
         });
 
         btnDown.setOnClickListener(v -> {
-            if (!nextDirection.equals("Up"))
+            if (!gamelogic.currentDirection.equals("Up"))
                 nextDirection = "Down";
         });
 
         btnLeft.setOnClickListener(v -> {
-            if (!nextDirection.equals("Right"))
+            if (!gamelogic.currentDirection.equals("Right"))
                 nextDirection = "Left";
         });
 
         btnRight.setOnClickListener(v -> {
-            if (!nextDirection.equals("Left"))
+            if (!gamelogic.currentDirection.equals("Left"))
                 nextDirection = "Right";
         });
 
@@ -76,23 +76,24 @@ public class GameActivity extends AppCompatActivity
 
                 if (gameStopped) return;
 
-                boolean alive = gamelogic.MoveSnake(nextDirection);
+                int alive = gamelogic.MoveSnake(nextDirection);
 
-                if (!alive) {
+                if (alive == 0) {
                     gameStopped = true;
                     stopTimer();
                     showLargeToast("You Lose");
                     return;
+                } else if (alive == 2) {
+                    onGameWon();
                 }
-
                 gameGrid.buildGrid(gamelogic.matGameGrid);
-                if (!gameStopped) {         // ★ NEW GUARD
-                    handler.postDelayed(this, SettingsActivity.snakeSpeed);
+                if (!gameStopped) {
+                    handler.postDelayed(this, settingsActivity.snakeSpeed);
                 }
             }
         };
 
-        handler.postDelayed(tickRunnable, SettingsActivity.snakeSpeed);
+        handler.postDelayed(tickRunnable, settingsActivity.snakeSpeed);
     }
 
     public void stopTimer() {
@@ -112,8 +113,6 @@ public class GameActivity extends AppCompatActivity
         showLargeToast("Start");
     }
 
-    // ★ NEW – callback מה־GameLogic
-    @Override
     public void onGameWon() {
         gameStopped = true;
         stopTimer();

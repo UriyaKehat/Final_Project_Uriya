@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Final_Project_Uriya" >
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settingsactivity"
             android:exported="false" />
         <activity
             android:name=".GameActivity"

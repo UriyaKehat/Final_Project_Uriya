@@ -16,10 +16,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    Button btnGridSize, btnSnakeSpeed, appleAmount, btnBgColor, btnBackToMainMenu;
-    public static String size = "small";
-    public static int snakeSpeed = 400;
-    public static int appleAmountValue = 1;
+    private Button btnGridSize, btnSnakeSpeed, appleAmount, btnBgColor, btnBackToMainMenu;
+    public int snakeSpeed = 400; // ליצור class שונה לכל ההגדרות
+    public int appleAmountValue = 1;
+    private GameSettings gameSettings;
 
 
     @Override
@@ -32,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        gameSettings = new GameSettings(snakeSpeed, appleAmountValue);
 
         btnGridSize = findViewById(R.id.btnGridSize);
         //
@@ -92,7 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (selectedIndex[0] != -1) {
-                                    snakeSpeed = speedValues[selectedIndex[0]];
+                                    gameSettings.setSnakeSpeed(speedValues[selectedIndex[0]]);
 
                                     Toast.makeText(SettingsActivity.this,
                                             "Snake speed set to: " + snakeSpeed + " ms",
@@ -141,7 +142,7 @@ public class SettingsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (selectedIndex[0] != -1) {
-                                    appleAmountValue = appleValues[selectedIndex[0]];
+                                    gameSettings.setAppleAmountValue(appleValues[selectedIndex[0]]);
 
                                     Toast.makeText(SettingsActivity.this,
                                             "Apple amount set to: " + appleAmountValue,
