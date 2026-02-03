@@ -1,18 +1,21 @@
 package com.example.final_project_uriya;
 
+import android.content.Intent;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class GameLogic {
 
-    //לקבל בintent את ההגדרות
-    private GameSettings gameSettings;
+
     public static final int EMPTY = 0, APPLE = 1;
     public static final int TAIL_MARK_UP = 2, TAIL_MARK_DOWN = 3,
             TAIL_MARK_LEFT = 4, TAIL_MARK_RIGHT = 5;
 
+    private Intent intentSettings = getIntent();
     public int rows = 11, columns = 10;
+    private int appleAmount =
     public int[][] matGameGrid = new int[rows][columns];
 
     public LinkedList<Point> snake = new LinkedList<>();

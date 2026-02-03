@@ -16,8 +16,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private Intent intentSettings = new Intent(SettingsActivity.this, GameActivity.class);
     private Button btnGridSize, btnSnakeSpeed, appleAmount, btnBgColor, btnBackToMainMenu;
-    public int snakeSpeed = 400; // ליצור class שונה לכל ההגדרות
+    public int snakeSpeed = 400;
     public int appleAmountValue = 1;
     private GameSettings gameSettings;
 
@@ -46,8 +47,8 @@ public class SettingsActivity extends AppCompatActivity {
         btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SettingsActivity.this, MainMenuActivity.class);
-                startActivity(intent);
+                Intent intentThis = new Intent(SettingsActivity.this, MainMenuActivity.class);
+                startActivity(intentThis);
             }
         });
 
@@ -142,7 +143,7 @@ public class SettingsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (selectedIndex[0] != -1) {
-                                    gameSettings.setAppleAmountValue(appleValues[selectedIndex[0]]);
+                                    gameSettings.setAppleAmount(appleValues[selectedIndex[0]]);
 
                                     Toast.makeText(SettingsActivity.this,
                                             "Apple amount set to: " + appleAmountValue,
@@ -156,6 +157,10 @@ public class SettingsActivity extends AppCompatActivity {
                 builder.create().show();
             }
         });
-
+        intentSettings.putExtra("get settings speed", gameSettings.getSnakeSpeed());
+        intentSettings.putExtra("get settings apple", gameSettings.getAppleAmount());
+        startActivity(intentSettings);
+        intentSettings.setClass(this, GameLogic.class);
+        startActivity(intentSettings);
     }
 }

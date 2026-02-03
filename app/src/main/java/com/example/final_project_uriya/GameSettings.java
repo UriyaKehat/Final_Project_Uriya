@@ -2,10 +2,10 @@ package com.example.final_project_uriya;
 
 public class GameSettings {
     private int snakeSpeed;
-    private int appleAmountValue;
+    private int appleAmount;
 
     public GameSettings(int appleAmountValue, int snakeSpeed) {
-        this.appleAmountValue = appleAmountValue;
+        this.appleAmount = appleAmountValue;
         this.snakeSpeed = snakeSpeed;
     }
 
@@ -17,11 +17,12 @@ public class GameSettings {
         this.snakeSpeed = snakeSpeed;
     }
 
-    public int getAppleAmountValue() {
-        return appleAmountValue;
+
+    public int getAppleAmount() {
+        return appleAmount;
     }
 
-    public void setAppleAmountValue(int appleAmountValue) {
-        this.appleAmountValue = appleAmountValue;
+    public void setAppleAmount(int appleAmountValue) {
+        this.appleAmount = appleAmountValue;
     }
 }

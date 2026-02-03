@@ -1,5 +1,6 @@
 package com.example.final_project_uriya;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,14 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 public class GameActivity extends AppCompatActivity {
 
 
+    private Intent intentSettings = getIntent();
     private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
     private GridLayout gridLayout;
     private GameGrid gameGrid;
     private Handler handler = new Handler();
     private Runnable tickRunnable;
     private boolean gameStopped = false;
-    private SettingsActivity settingsActivity;
-
+    private GameSettings gameSettings;
     private GameLogic gamelogic;
     private String nextDirection = "Right";
 
@@ -30,7 +31,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gamelogic = new GameLogic();
-        settingsActivity = new SettingsActivity();
+        gameSettings = new GameSettings(intentSettings.getIntExtra("get settings speed", 300),
+                                        intentSettings.getIntExtra("get settings apple", 1));
 
         btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
@@ -88,12 +90,12 @@ public class GameActivity extends AppCompatActivity {
                 }
                 gameGrid.buildGrid(gamelogic.matGameGrid);
                 if (!gameStopped) {
-                    handler.postDelayed(this, settingsActivity.snakeSpeed);
+                    handler.postDelayed(this, gameSettings.getSnakeSpeed());
                 }
             }
         };
 
-        handler.postDelayed(tickRunnable, settingsActivity.snakeSpeed);
+        handler.postDelayed(tickRunnable, gameSettings.getSnakeSpeed());
     }
 
     public void stopTimer() {
