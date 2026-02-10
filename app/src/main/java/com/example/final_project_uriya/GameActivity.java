@@ -3,6 +3,7 @@ package com.example.final_project_uriya;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -45,26 +46,43 @@ public class GameActivity extends AppCompatActivity {
 
         gameGrid.buildGrid(gamelogic.matGameGrid);
 
-        btnRestart.setOnClickListener(v -> restartGame());
-
-        btnUp.setOnClickListener(v -> {
-            if (!gamelogic.currentDirection.equals("Down"))
-                nextDirection = "Up";
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartGame();
+            }
         });
 
-        btnDown.setOnClickListener(v -> {
-            if (!gamelogic.currentDirection.equals("Up"))
-                nextDirection = "Down";
+        btnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!gamelogic.currentDirection.equals("Down"))
+                    nextDirection = "Up";
+            }
         });
 
-        btnLeft.setOnClickListener(v -> {
-            if (!gamelogic.currentDirection.equals("Right"))
-                nextDirection = "Left";
+        btnDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!gamelogic.currentDirection.equals("Up"))
+                    nextDirection = "Down";
+            }
         });
 
-        btnRight.setOnClickListener(v -> {
-            if (!gamelogic.currentDirection.equals("Left"))
-                nextDirection = "Right";
+        btnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!gamelogic.currentDirection.equals("Right"))
+                    nextDirection = "Left";
+            }
+        });
+
+        btnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!gamelogic.currentDirection.equals("Left"))
+                    nextDirection = "Right";
+            }
         });
 
         restartGame();
