@@ -1,6 +1,5 @@
 package com.example.final_project_uriya;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,20 +13,25 @@ import androidx.appcompat.app.AppCompatActivity;
 public class GameActivity extends AppCompatActivity {
 
 
+    private TextView tvTimer;
     private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
     private GridLayout gridLayout;
     private GameGrid gameGrid;
-    private Handler handler = new Handler();
-    private Runnable tickRunnable;
-    private boolean gameStopped = false;
+    private Handler handlerGame = new Handler();
+    private Handler handlerTimer = new Handler();
+    private Runnable gameTickRunnable, timerRunnable;
+    private int totalSeconds = 0;
+    private boolean gameStopped = false, timerIsRunning = false;
     private GameLogic gamelogic;
     private String nextDirection = "Right";
+    private TimeData stoppedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        tvTimer = findViewById(R.id.tvTimer);
         gamelogic = new GameLogic();
         btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
@@ -67,7 +71,29 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        tickRunnable = new Runnable() {
+        timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                totalSeconds++;
+
+                int hours = totalSeconds / 3600;
+                int minutes = (totalSeconds % 3600) / 60;
+                int seconds = totalSeconds % 60;
+
+                tvTimer.setText(String.format(
+                        "%02d:%02d:%02d", hours, minutes, seconds));
+
+                handlerTimer.postDelayed(this, 1000);
+            }
+        };
+        if (!timerIsRunning) {
+            handlerTimer.post(timerRunnable);
+            timerIsRunning = true;
+        }
+    }
+
+    private void startGameTick() {
+        gameTickRunnable = new Runnable() {
             @Override
             public void run() {
 
@@ -77,7 +103,7 @@ public class GameActivity extends AppCompatActivity {
 
                 if (alive == 0) {
                     gameStopped = true;
-                    stopTimer();
+                    stopGame();
                     showLargeToast("You Lose");
                     return;
                 }
@@ -86,41 +112,63 @@ public class GameActivity extends AppCompatActivity {
                 }
                 gameGrid.buildGrid(gamelogic.matGameGrid);
                 if (!gameStopped) {
-                    handler.postDelayed(this, GameSettings.snakeSpeed);
+                    handlerGame.postDelayed(this, GameSettings.snakeSpeed);
                 }
             }
         };
 
-        handler.postDelayed(tickRunnable, GameSettings.snakeSpeed);
+        handlerGame.postDelayed(gameTickRunnable, GameSettings.snakeSpeed);
     }
 
-    public void stopTimer() {
-        if (tickRunnable != null) {
-            handler.removeCallbacks(tickRunnable);
+    private void stopGameTick() {
+        if (gameTickRunnable != null) {
+            handlerGame.removeCallbacks(gameTickRunnable);
+        }
+    }
+    private void stopTimer() {
+        if (timerIsRunning) {
+            handlerTimer.removeCallbacks(timerRunnable);
+            timerIsRunning = false;
+
+            int hours = totalSeconds / 3600;
+            int minutes = (totalSeconds % 3600) / 60;
+            int seconds = totalSeconds % 60;
+
+            stoppedTime = new TimeData(hours, minutes, seconds);
         }
     }
 
+    private void startGame() {
+        startGameTick();
+        startTimer();
+    }
+
+    private void stopGame() {
+        stopGameTick();
+        stopTimer();
+    }
 
     private void restartGame() {
-        stopTimer();
+        stopGame();
         gameStopped = false;
         gamelogic.resetGame();
+        totalSeconds = 0;
         nextDirection = "Right";
         gameGrid.buildGrid(gamelogic.matGameGrid);
-        startTimer();
+        startGame();
         showLargeToast("Start");
     }
 
-    public void onGameWon() {
+    private void onGameWon() {
         gameStopped = true;
-        stopTimer();
+        stopGame();
         showLargeToast("You Won!");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        stopTimer();
+        stopGame();
     }
 
     private void showLargeToast(String message) {
