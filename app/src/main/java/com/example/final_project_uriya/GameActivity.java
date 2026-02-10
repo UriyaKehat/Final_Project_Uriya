@@ -80,8 +80,7 @@ public class GameActivity extends AppCompatActivity {
                 int minutes = (totalSeconds % 3600) / 60;
                 int seconds = totalSeconds % 60;
 
-                tvTimer.setText(String.format(
-                        "%02d:%02d:%02d", hours, minutes, seconds));
+                tvTimer.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 
                 handlerTimer.postDelayed(this, 1000);
             }
