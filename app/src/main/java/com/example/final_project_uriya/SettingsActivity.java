@@ -16,12 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Intent intentSettings = new Intent(SettingsActivity.this, GameActivity.class);
     private Button btnGridSize, btnSnakeSpeed, appleAmount, btnBgColor, btnBackToMainMenu;
-    public int snakeSpeed = 400;
-    public int appleAmountValue = 1;
-    private GameSettings gameSettings;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        gameSettings = new GameSettings(snakeSpeed, appleAmountValue);
 
         btnGridSize = findViewById(R.id.btnGridSize);
         //
@@ -94,10 +88,10 @@ public class SettingsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (selectedIndex[0] != -1) {
-                                    gameSettings.setSnakeSpeed(speedValues[selectedIndex[0]]);
+                                    GameSettings.snakeSpeed = speedValues[selectedIndex[0]];
 
                                     Toast.makeText(SettingsActivity.this,
-                                            "Snake speed set to: " + snakeSpeed + " ms",
+                                            "Snake speed set to: " + GameSettings.snakeSpeed + " ms",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -143,10 +137,10 @@ public class SettingsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (selectedIndex[0] != -1) {
-                                    gameSettings.setAppleAmount(appleValues[selectedIndex[0]]);
+                                    GameSettings.appleAmount = appleValues[selectedIndex[0]];
 
                                     Toast.makeText(SettingsActivity.this,
-                                            "Apple amount set to: " + appleAmountValue,
+                                            "Apple amount set to: " + GameSettings.appleAmount,
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -157,10 +151,5 @@ public class SettingsActivity extends AppCompatActivity {
                 builder.create().show();
             }
         });
-        intentSettings.putExtra("get settings speed", gameSettings.getSnakeSpeed());
-        intentSettings.putExtra("get settings apple", gameSettings.getAppleAmount());
-        startActivity(intentSettings);
-        intentSettings.setClass(this, GameLogic.class);
-        startActivity(intentSettings);
     }
 }

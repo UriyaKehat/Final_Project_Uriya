@@ -14,14 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 public class GameActivity extends AppCompatActivity {
 
 
-    private Intent intentSettings = getIntent();
     private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
     private GridLayout gridLayout;
     private GameGrid gameGrid;
     private Handler handler = new Handler();
     private Runnable tickRunnable;
     private boolean gameStopped = false;
-    private GameSettings gameSettings;
     private GameLogic gamelogic;
     private String nextDirection = "Right";
 
@@ -31,9 +29,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gamelogic = new GameLogic();
-        gameSettings = new GameSettings(intentSettings.getIntExtra("get settings speed", 300),
-                                        intentSettings.getIntExtra("get settings apple", 1));
-
         btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
         btnDown = findViewById(R.id.btnDown);
@@ -85,17 +80,18 @@ public class GameActivity extends AppCompatActivity {
                     stopTimer();
                     showLargeToast("You Lose");
                     return;
-                } else if (alive == 2) {
+                }
+                 else if (alive == 2) {
                     onGameWon();
                 }
                 gameGrid.buildGrid(gamelogic.matGameGrid);
                 if (!gameStopped) {
-                    handler.postDelayed(this, gameSettings.getSnakeSpeed());
+                    handler.postDelayed(this, GameSettings.snakeSpeed);
                 }
             }
         };
 
-        handler.postDelayed(tickRunnable, gameSettings.getSnakeSpeed());
+        handler.postDelayed(tickRunnable, GameSettings.snakeSpeed);
     }
 
     public void stopTimer() {

@@ -8,14 +8,11 @@ import java.util.Random;
 
 public class GameLogic {
 
-
     public static final int EMPTY = 0, APPLE = 1;
     public static final int TAIL_MARK_UP = 2, TAIL_MARK_DOWN = 3,
             TAIL_MARK_LEFT = 4, TAIL_MARK_RIGHT = 5;
 
-    private Intent intentSettings = getIntent();
     public int rows = 11, columns = 10;
-    private int appleAmount =
     public int[][] matGameGrid = new int[rows][columns];
 
     public LinkedList<Point> snake = new LinkedList<>();
@@ -63,8 +60,9 @@ public class GameLogic {
         if (!ateApple) {
             Point tail = snake.removeFirst();
             matGameGrid[tail.row][tail.col] = EMPTY;
-        } else {
-            if(createRandomApple() == 1);
+        }
+        else if(createRandomApple() == 1)
+        {
                 return 2;
         }
 
@@ -120,24 +118,24 @@ public class GameLogic {
     }
 
     public void LayApples() {
-        if (settingsActivity.appleAmountValue == 1)
+        if (GameSettings.appleAmount == 1)
             matGameGrid[5][8] = APPLE;
-        if (settingsactivity.appleAmountValue == 2) {
+        if (GameSettings.appleAmount == 2) {
             matGameGrid[4][8] = APPLE;
             matGameGrid[6][8] = APPLE;
         }
-        if (settingsactivity.appleAmountValue == 3) {
+        if (GameSettings.appleAmount == 3) {
             matGameGrid[2][8] = APPLE;
             matGameGrid[5][8] = APPLE;
             matGameGrid[8][8] = APPLE;
         }
-        if (settingsactivity.appleAmountValue == 4) {
+        if (GameSettings.appleAmount == 4) {
             matGameGrid[4][8] = APPLE;
             matGameGrid[4][6] = APPLE;
             matGameGrid[6][6] = APPLE;
             matGameGrid[6][8] = APPLE;
         }
-        if (settingsactivity.appleAmountValue == 5) {
+        if (GameSettings.appleAmount == 5) {
             matGameGrid[3][8] = APPLE;
             matGameGrid[5][8] = APPLE;
             matGameGrid[7][8] = APPLE;

@@ -30,10 +30,13 @@ public class MainMenuActivity extends AppCompatActivity {
             return insets;
         });
         tvSNAKE = findViewById(R.id.tvSNAKE);
-        //
         etUserName = findViewById(R.id.etUserName);
-        //
         btnNewGame = findViewById(R.id.btnNewGame);
+        btnLeaderBoard = findViewById(R.id.btnLeaderBoard);
+        btnSetting = findViewById(R.id.btnSettings);
+
+        //
+
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,9 +45,6 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
         //
-        btnLeaderBoard = findViewById(R.id.btnLeaderBoard);
-        //
-        btnSetting = findViewById(R.id.btnSettings);
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
