@@ -2,6 +2,7 @@ package com.example.final_project_uriya;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -19,13 +20,18 @@ public class GameActivity extends AppCompatActivity {
     private GridLayout gridLayout;
     private GameGrid gameGrid;
     private Handler handlerGame = new Handler();
-    private Handler handlerTimer = new Handler();
     private Runnable gameTickRunnable, timerRunnable;
-    private int totalSeconds = 0;
     private boolean gameStopped = false, timerIsRunning = false;
     private GameLogic gamelogic;
     private String nextDirection = "Right";
-    private TimeData stoppedTime;
+    private LeaderBoardDAO leaderBoardDAO;
+    private GameScore gameScore;
+    private LeaderBoardDB leaderBoardDB;
+    private CountDownTimer timer;
+    private long startTime;
+    private long elapsedMillis;
+    private boolean isTimerRunning = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,25 +94,31 @@ public class GameActivity extends AppCompatActivity {
         restartGame();
     }
 
-    private void startTimer() {
-        timerRunnable = new Runnable() {
+    public void startTimer() {
+        if (isTimerRunning) return;
+
+        startTime = System.currentTimeMillis() - elapsedMillis; // שמירה במקרה של הפעלה מחדש
+        isTimerRunning = true;
+
+        timer = new CountDownTimer(3600000, 1000) { // שעה אחת
             @Override
-            public void run() {
-                totalSeconds++;
+            public void onTick(long millisUntilFinished) {
+                elapsedMillis = System.currentTimeMillis() - startTime;
 
-                int hours = totalSeconds / 3600;
-                int minutes = (totalSeconds % 3600) / 60;
-                int seconds = totalSeconds % 60;
+                int seconds = (int) (elapsedMillis / 1000);
+                int minutes = seconds / 60;
+                seconds = seconds % 60;
 
-                tvTimer.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+                tvTimer.setText(String.format("%02d:%02d", minutes, seconds));
+            }
 
-                handlerTimer.postDelayed(this, 1000);
+            @Override
+            public void onFinish() {
+                // לא יקרה
             }
         };
-        if (!timerIsRunning) {
-            handlerTimer.post(timerRunnable);
-            timerIsRunning = true;
-        }
+
+        timer.start();
     }
 
     private void startGameTick() {
@@ -142,17 +154,22 @@ public class GameActivity extends AppCompatActivity {
             handlerGame.removeCallbacks(gameTickRunnable);
         }
     }
-    private void stopTimer() {
-        if (timerIsRunning) {
-            handlerTimer.removeCallbacks(timerRunnable);
-            timerIsRunning = false;
-
-            int hours = totalSeconds / 3600;
-            int minutes = (totalSeconds % 3600) / 60;
-            int seconds = totalSeconds % 60;
-
-            stoppedTime = new TimeData(hours, minutes, seconds);
+    public void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            isTimerRunning = false;
         }
+    }
+    public void resetTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        elapsedMillis = 0;
+        isTimerRunning = false;
+        tvTimer.setText("00:00");
+    }
+    public int getElapsedMillis() {
+        return (int) elapsedMillis;
     }
 
     private void startGame() {
@@ -169,7 +186,7 @@ public class GameActivity extends AppCompatActivity {
         stopGame();
         gameStopped = false;
         gamelogic.resetGame();
-        totalSeconds = 0;
+        resetTimer();
         nextDirection = "Right";
         gameGrid.buildGrid(gamelogic.matGameGrid);
         startGame();
@@ -180,6 +197,18 @@ public class GameActivity extends AppCompatActivity {
         gameStopped = true;
         stopGame();
         showLargeToast("You Won!");
+        UpdateDB();
+    }
+
+    private void UpdateDB() {
+        gameScore = new GameScore(getElapsedMillis(), GameSettings.appleAmount, "uriya");
+
+        if(leaderBoardDAO.getGameScoreByUserName(gameScore.getUserName()) == null){
+            leaderBoardDAO.insert(gameScore);
+        }
+        else{
+            leaderBoardDAO.update(gameScore);
+        }
     }
 
     @Override
@@ -201,4 +230,6 @@ public class GameActivity extends AppCompatActivity {
         toast.setView(tv);
         toast.show();
     }
+
+
 }

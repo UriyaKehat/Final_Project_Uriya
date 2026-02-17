@@ -11,17 +11,20 @@ import java.util.List;
 @Dao
 public interface LeaderBoardDAO {
     @Insert
-    void insert(LeaderBoard leaderBoard);
+    void insert(GameScore gameScore);
 
     @Update
-    void update(LeaderBoard leaderBoard);
+    void update(GameScore gameScore);
 
     @Delete
-    void delete(LeaderBoard leaderBoard);
+    void delete(GameScore gameScore);
 
-    @Query("SELECT * FROM leaderboard")
-    List<LeaderBoard>getAllLeaderBoards();
+    @Query("SELECT * FROM GameScore")
+    List<GameScore> getAllLeaderBoards();
 
-    @Query("SELECT * FROM leaderboard WHERE id = :id")
-    LeaderBoard getLeaderBoardByID(int id);
+    @Query("SELECT * FROM GameScore WHERE id = :id")
+    GameScore getGameScoreByID(int id);
+
+    @Query("SELECT * FROM GameScore WHERE userName = :userName")
+    GameScore getGameScoreByUserName(String userName);
 }
