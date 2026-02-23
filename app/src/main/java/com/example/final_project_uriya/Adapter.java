@@ -9,11 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     Context context;
-    GameScore[] scoresData;
-    public Adapter(Context context, GameScore[] scoresData){
+    ArrayList<GameScore> scoresData;
+    public Adapter(Context context, ArrayList<GameScore> scoresData){
         this.context = context;
         this.scoresData = scoresData;
     }
@@ -26,12 +28,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
-        holder.textView.setText(String.valueOf(this.scoresData[position]));
+        holder.textView.setText(String.valueOf(this.scoresData.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return this.scoresData.length;
+        return this.scoresData.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
 
