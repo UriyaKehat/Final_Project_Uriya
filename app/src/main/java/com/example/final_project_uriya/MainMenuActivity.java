@@ -36,7 +36,6 @@ public class MainMenuActivity extends AppCompatActivity {
         btnSetting = findViewById(R.id.btnSettings);
 
         //
-
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +48,14 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (MainMenuActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+        //
+        btnLeaderBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (MainMenuActivity.this, LeaderBoardActivity.class);
                 startActivity(intent);
             }
         });

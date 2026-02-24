@@ -41,8 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentThis = new Intent(SettingsActivity.this, MainMenuActivity.class);
-                startActivity(intentThis);
+                finish();
             }
         });
 

@@ -20,8 +20,8 @@ public class GameActivity extends AppCompatActivity {
     private GridLayout gridLayout;
     private GameGrid gameGrid;
     private Handler handlerGame = new Handler();
-    private Runnable gameTickRunnable, timerRunnable;
-    private boolean gameStopped = false, timerIsRunning = false;
+    private Runnable gameTickRunnable;
+    private boolean gameStopped = false;
     private GameLogic gamelogic;
     private String nextDirection = "Right";
     private LeaderBoardDAO leaderBoardDAO;
@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
         btnDown = findViewById(R.id.btnDown);
         btnLeft = findViewById(R.id.btnLeft);
         btnRight = findViewById(R.id.btnRight);
+        leaderBoardDAO = LeaderBoardDB.getInstance(this).leaderBoardDao();
 
         gridLayout = findViewById(R.id.gridLayout);
         gameGrid = new GameGrid(this, gridLayout,

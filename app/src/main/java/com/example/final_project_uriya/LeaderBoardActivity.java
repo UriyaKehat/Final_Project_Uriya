@@ -10,13 +10,15 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 public class LeaderBoardActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<GameScore> scoresData;
+    private List<GameScore> scoresData;
     private Adapter adapter;
+    LeaderBoardDAO leaderBoardDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        scoresData = new ArrayList<GameScore>();
-
+        leaderBoardDAO = LeaderBoardDB.getInstance(this).leaderBoardDao();
+        scoresData = leaderBoardDAO.getAllLeaderBoards();
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new Adapter(LeaderBoardActivity.this, this.scoresData);
         recyclerView.setAdapter(this.adapter);

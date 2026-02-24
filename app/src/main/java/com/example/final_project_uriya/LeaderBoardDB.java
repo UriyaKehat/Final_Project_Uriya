@@ -18,6 +18,7 @@ public abstract class LeaderBoardDB extends RoomDatabase {
                             context.getApplicationContext(),
                             LeaderBoardDB.class,
                             "leaderboard_database")
+                    .allowMainThreadQueries()
                     .build();
         }
         return instance;
