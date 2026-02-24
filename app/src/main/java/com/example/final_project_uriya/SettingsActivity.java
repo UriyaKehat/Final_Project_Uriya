@@ -1,7 +1,6 @@
 package com.example.final_project_uriya;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         //
         btnBgColor = findViewById(R.id.btnBgColor);
         //
-        btnBackToMainMenu = findViewById(R.id.btnBackToMainMenu);
+        btnBackToMainMenu = findViewById(R.id.btnBackToMainMenuFromSettings);
         btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -43,13 +43,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BackGround Color"
-        app:layout_constraintBottom_toTopOf="@+id/btnBackToMainMenu"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackToMainMenuFromSettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAppleAmount" />
 
     <Button
-        android:id="@+id/btnBackToMainMenu"
+        android:id="@+id/btnBackToMainMenuFromSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back To Main Menu"
