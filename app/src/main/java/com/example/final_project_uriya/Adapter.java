@@ -29,7 +29,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
         GameScore gameScoretemp = this.scoresData.get(position);
-        holder.textView.setText(String.valueOf(gameScoretemp.getUserName() +", " + gameScoretemp.getTimeInMilliseconds() + ", " + gameScoretemp.getAppleAmount()));
+        holder.textView.setText(String.valueOf(gameScoretemp.getId() + " | " + gameScoretemp.getUserName() +" | " + gameScoretemp.getTimeInMilliseconds() + " | " + gameScoretemp.getAppleAmount()));
     }
 
     @Override

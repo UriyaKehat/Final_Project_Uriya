@@ -1,6 +1,9 @@
 package com.example.final_project_uriya;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +18,8 @@ import java.util.List;
 
 public class LeaderBoardActivity extends AppCompatActivity {
 
+    private Button btnBackToMainMenu;
+    private TextView tvUpTop;
     private RecyclerView recyclerView;
     private List<GameScore> scoresData;
     private Adapter adapter;
@@ -30,6 +35,15 @@ public class LeaderBoardActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        tvUpTop = findViewById(R.id.tvUpTop);
+        btnBackToMainMenu = findViewById(R.id.btnBackToMainMenuFromLeaderBoard);
+        btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         leaderBoardDAO = LeaderBoardDB.getInstance(this).leaderBoardDao();
         scoresData = leaderBoardDAO.getAllLeaderBoards();
         recyclerView = findViewById(R.id.recyclerView);
