@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
     private Runnable gameTickRunnable;
     private boolean gameStopped = false;
     private GameLogic gamelogic;
-    private String nextDirection = "Right";
+    private String username, nextDirection = "Right";
     private LeaderBoardDAO leaderBoardDAO;
     private GameScore gameScore;
     private LeaderBoardDB leaderBoardDB;
@@ -38,6 +38,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        username = getIntent().getStringExtra("username");
         tvTimer = findViewById(R.id.tvTimer);
         gamelogic = new GameLogic();
         btnRestart = findViewById(R.id.btnRestart);
@@ -202,7 +203,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void UpdateDB() {
-        gameScore = new GameScore(getElapsedMillis(), GameSettings.appleAmount, "uriya");
+        gameScore = new GameScore(formatTime(getElapsedMillis()), GameSettings.appleAmount, username);
 
         if(leaderBoardDAO.getGameScoreByUserName(gameScore.getUserName()) == null){
             leaderBoardDAO.insert(gameScore);
@@ -232,5 +233,11 @@ public class GameActivity extends AppCompatActivity {
         toast.show();
     }
 
+    public String formatTime(int millis) {
+        int totalSeconds = millis / 1000;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
 
+        return String.format("%02d:%02d", minutes, seconds);
+    }
 }

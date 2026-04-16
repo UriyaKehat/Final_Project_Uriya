@@ -9,16 +9,16 @@ public class GameScore {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int timeInMilliseconds;
+    private String time;
     private int appleAmount;
     private String userName;
 
     public GameScore() {}
 
-    public GameScore(int time, int appleAmount, String userName){
-        this.timeInMilliseconds = time;
+    public GameScore(String time, int appleAmount, String userName){
+        this.time = time;
         this.appleAmount = appleAmount;
-        this.userName = userName;//לטפל דרך JAVA שלא יהיו כפולות שמות
+        this.userName = userName;
         id = 0;
     }
 
@@ -30,12 +30,12 @@ public class GameScore {
         this.id = id;
     }
 
-    public int getTimeInMilliseconds() {
-        return timeInMilliseconds;
+    public String getTime() {
+        return time;
     }
 
-    public void setTimeInMilliseconds(int timeInMilliseconds) {
-        this.timeInMilliseconds = timeInMilliseconds;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getAppleAmount() {

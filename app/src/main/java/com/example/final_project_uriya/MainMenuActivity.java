@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class MainMenuActivity extends AppCompatActivity {
     Button btnNewGame, btnLeaderBoard, btnSetting;
     TextView tvSNAKE;
     EditText etUserName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,15 @@ public class MainMenuActivity extends AppCompatActivity {
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = etUserName.getText().toString().trim();
+                if (username.isEmpty())
+                    showToast("put in a name");
+                else
+                {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
+                }
             }
         });
         //
@@ -59,5 +68,8 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
