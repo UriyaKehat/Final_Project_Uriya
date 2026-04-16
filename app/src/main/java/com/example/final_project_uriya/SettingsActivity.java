@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Button btnGridSize, btnSnakeSpeed, appleAmount, btnBgColor, btnBackToMainMenu;
+    private Button btnSnakeSpeed, appleAmount, btnBgColor, btnBackToMainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +27,8 @@ public class SettingsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        btnGridSize = findViewById(R.id.btnGridSize);
-        //
         btnSnakeSpeed = findViewById(R.id.btnSnakeSpeed);
-        //
         appleAmount = findViewById(R.id.btnAppleAmount);
-        //
         btnBgColor = findViewById(R.id.btnBgColor);
         //
         btnBackToMainMenu = findViewById(R.id.btnBackToMainMenuFromSettings);
@@ -110,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
                         "2 Apples",
                         "3 Apples",
                         "4 Apples",
-                        "5 Apples"
+                        "experimental"
                 };
 
                 final int[] appleValues = {1, 2, 3, 4, 5};
