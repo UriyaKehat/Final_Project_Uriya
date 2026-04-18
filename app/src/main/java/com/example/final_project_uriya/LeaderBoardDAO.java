@@ -19,7 +19,7 @@ public interface LeaderBoardDAO {
     @Delete
     void delete(GameScore gameScore);
 
-    @Query("SELECT * FROM GameScore")
+    @Query("SELECT * FROM GameScore ORDER BY appleAmount ASC, time ASC")
     List<GameScore> getAllLeaderBoards();
 
     @Query("SELECT * FROM GameScore WHERE id = :id")
