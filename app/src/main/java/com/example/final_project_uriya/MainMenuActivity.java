@@ -16,9 +16,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    Button btnNewGame, btnLeaderBoard, btnSetting;
-    TextView tvSNAKE;
-    EditText etUserName;
+    private Button btnNewGame, btnLeaderBoard, btnSetting;
+    private TextView tvSNAKE;
+    private EditText etUserName;
 
 
     @Override

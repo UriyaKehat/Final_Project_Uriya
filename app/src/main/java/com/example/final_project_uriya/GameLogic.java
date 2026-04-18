@@ -142,7 +142,7 @@ public class GameLogic {
             matGameGrid[6][6] = APPLE;
             matGameGrid[4][6] = APPLE;
 
-            //
+            /*
             matGameGrid[0][0] = APPLE;
             matGameGrid[0][1] = APPLE;
             matGameGrid[0][2] = APPLE;
@@ -184,7 +184,7 @@ public class GameLogic {
             matGameGrid[3][5] = APPLE;
             matGameGrid[3][6] = APPLE;
             matGameGrid[3][7] = APPLE;
-            matGameGrid[3][9] = APPLE;
+            matGameGrid[3][9] = APPLE;*/
         }
     }
 

@@ -23,7 +23,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<GameScore> scoresData;
     private Adapter adapter;
-    LeaderBoardDAO leaderBoardDAO;
+    private LeaderBoardDAO leaderBoardDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

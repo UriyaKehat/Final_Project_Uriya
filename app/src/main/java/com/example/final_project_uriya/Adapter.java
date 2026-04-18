@@ -44,8 +44,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     gameScoretemp.getUserName() + " | " +
                     gameScoretemp.getTime() + " | " +
                     gameScoretemp.getAppleAmount());
-        }
-        else {
+        } else {
             holder.textView.setText(" " +
                     (position + 1) + " . " +
                             gameScoretemp.getUserName() + " | " +

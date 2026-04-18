@@ -26,7 +26,6 @@ public class GameActivity extends AppCompatActivity {
     private String username, nextDirection = "Right";
     private LeaderBoardDAO leaderBoardDAO;
     private GameScore gameScore;
-    private LeaderBoardDB leaderBoardDB;
     private CountDownTimer timer;
     private long startTime;
     private long elapsedMillis;
