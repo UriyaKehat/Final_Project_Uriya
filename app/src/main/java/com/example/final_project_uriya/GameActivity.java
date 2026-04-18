@@ -16,7 +16,7 @@ public class GameActivity extends AppCompatActivity {
 
 
     private TextView tvTimer;
-    private Button btnRestart, btnUp, btnDown, btnLeft, btnRight;
+    private Button btnRestart, btnUp, btnDown, btnLeft, btnRight, btnBackToMainMenu;
     private GridLayout gridLayout;
     private GameGrid gameGrid;
     private Handler handlerGame = new Handler();
@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         tvTimer = findViewById(R.id.tvTimer);
         gamelogic = new GameLogic();
+        btnBackToMainMenu = findViewById(R.id.btnBackToMainMenuFromGame);
         btnRestart = findViewById(R.id.btnRestart);
         btnUp = findViewById(R.id.btnUp);
         btnDown = findViewById(R.id.btnDown);
@@ -49,10 +50,14 @@ public class GameActivity extends AppCompatActivity {
         leaderBoardDAO = LeaderBoardDB.getInstance(this).leaderBoardDao();
 
         gridLayout = findViewById(R.id.gridLayout);
-        gameGrid = new GameGrid(this, gridLayout,
-                gamelogic.rows, gamelogic.columns, 85);
+        gameGrid = new GameGrid(this, gridLayout, gamelogic.rows, gamelogic.columns, 85);
 
         gameGrid.buildGrid(gamelogic.matGameGrid);
+
+        btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {finish();}
+        });
 
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
