@@ -9,18 +9,19 @@ public class GameScore {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String time;
+    private int time;
     private int appleAmount;
     private String userName;
 
     public GameScore() {}
 
-    public GameScore(String time, int appleAmount, String userName){
+    public GameScore(int time, int appleAmount, String userName){
         this.time = time;
         this.appleAmount = appleAmount;
         this.userName = userName;
         id = 0;
     }
+
 
     public int getId() {
         return id;
@@ -30,11 +31,11 @@ public class GameScore {
         this.id = id;
     }
 
-    public String getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(int time) {
         this.time = time;
     }
 

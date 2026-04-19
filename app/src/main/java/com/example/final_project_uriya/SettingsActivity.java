@@ -105,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
                         "2 Apples",
                         "3 Apples",
                         "4 Apples",
-                        "5 Apples"
+                        "experimental"
                 };
 
                 final int[] appleValues = {1, 2, 3, 4, 5};

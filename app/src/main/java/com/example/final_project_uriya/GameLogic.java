@@ -32,7 +32,7 @@ public class GameLogic {
         LayApples();
     }
 
-    public int MoveSnake(String direction) {//לשנות שיחזיר ערך כולל לשנות את השימוש
+    public int MoveSnake(String direction) {
         currentDirection = direction;
 
         Point head = snake.getLast();
@@ -134,15 +134,9 @@ public class GameLogic {
             matGameGrid[4][6] = APPLE;
             matGameGrid[6][6] = APPLE;
             matGameGrid[6][8] = APPLE;
-        }
-        if (GameSettings.appleAmount == 5) {
-            matGameGrid[3][8] = APPLE;
-            matGameGrid[5][8] = APPLE;
-            matGameGrid[7][8] = APPLE;
-            matGameGrid[6][6] = APPLE;
-            matGameGrid[4][6] = APPLE;
 
-            /*
+            //
+
             matGameGrid[0][0] = APPLE;
             matGameGrid[0][1] = APPLE;
             matGameGrid[0][2] = APPLE;
@@ -184,7 +178,58 @@ public class GameLogic {
             matGameGrid[3][5] = APPLE;
             matGameGrid[3][6] = APPLE;
             matGameGrid[3][7] = APPLE;
-            matGameGrid[3][9] = APPLE;*/
+            matGameGrid[3][9] = APPLE;
+        }
+        if (GameSettings.appleAmount == 5) {
+            matGameGrid[3][8] = APPLE;
+            matGameGrid[5][8] = APPLE;
+            matGameGrid[7][8] = APPLE;
+            matGameGrid[6][6] = APPLE;
+            matGameGrid[4][6] = APPLE;
+
+
+            matGameGrid[0][0] = APPLE;
+            matGameGrid[0][1] = APPLE;
+            matGameGrid[0][2] = APPLE;
+            matGameGrid[0][3] = APPLE;
+            matGameGrid[0][4] = APPLE;
+            matGameGrid[0][5] = APPLE;
+            matGameGrid[0][6] = APPLE;
+            matGameGrid[0][7] = APPLE;
+            matGameGrid[0][8] = APPLE;
+            matGameGrid[0][9] = APPLE;
+
+            matGameGrid[1][0] = APPLE;
+            matGameGrid[1][1] = APPLE;
+            matGameGrid[1][2] = APPLE;
+            matGameGrid[1][3] = APPLE;
+            matGameGrid[1][4] = APPLE;
+            matGameGrid[1][5] = APPLE;
+            matGameGrid[1][6] = APPLE;
+            matGameGrid[1][7] = APPLE;
+            matGameGrid[1][8] = APPLE;
+            matGameGrid[1][9] = APPLE;
+
+            matGameGrid[2][0] = APPLE;
+            matGameGrid[2][1] = APPLE;
+            matGameGrid[2][2] = APPLE;
+            matGameGrid[2][3] = APPLE;
+            matGameGrid[2][4] = APPLE;
+            matGameGrid[2][5] = APPLE;
+            matGameGrid[2][6] = APPLE;
+            matGameGrid[2][7] = APPLE;
+            matGameGrid[2][8] = APPLE;
+            matGameGrid[2][9] = APPLE;
+
+            matGameGrid[3][0] = APPLE;
+            matGameGrid[3][1] = APPLE;
+            matGameGrid[3][2] = APPLE;
+            matGameGrid[3][3] = APPLE;
+            matGameGrid[3][4] = APPLE;
+            matGameGrid[3][5] = APPLE;
+            matGameGrid[3][6] = APPLE;
+            matGameGrid[3][7] = APPLE;
+            matGameGrid[3][9] = APPLE;
         }
     }
 

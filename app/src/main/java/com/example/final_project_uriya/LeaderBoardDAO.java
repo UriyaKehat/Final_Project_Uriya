@@ -25,6 +25,6 @@ public interface LeaderBoardDAO {
     @Query("SELECT * FROM GameScore WHERE id = :id")
     GameScore getGameScoreByID(int id);
 
-    @Query("SELECT * FROM GameScore WHERE userName = :userName")
-    GameScore getGameScoreByUserName(String userName);
+    @Query("SELECT * FROM GameScore WHERE userName = :name LIMIT 1")
+    GameScore getGameScoreByName(String name);
 }

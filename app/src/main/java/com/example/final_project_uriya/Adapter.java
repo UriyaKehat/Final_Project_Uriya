@@ -32,24 +32,24 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         if (position == 0) {
             holder.textView.setText("🥇" + ". " +
                     gameScoretemp.getUserName() + " | " +
-                    gameScoretemp.getTime() + " | " +
+                    formatTime(gameScoretemp.getTime()) + " | " +
                     gameScoretemp.getAppleAmount());
         } else if (position == 1) {
             holder.textView.setText("🥈" + ". " +
                     gameScoretemp.getUserName() + " | " +
-                    gameScoretemp.getTime() + " | " +
+                    formatTime(gameScoretemp.getTime()) + " | " +
                     gameScoretemp.getAppleAmount());
         } else if (position == 2) {
             holder.textView.setText("🥉" + ". " +
                     gameScoretemp.getUserName() + " | " +
-                    gameScoretemp.getTime() + " | " +
+                    formatTime(gameScoretemp.getTime()) + " | " +
                     gameScoretemp.getAppleAmount());
         } else {
             holder.textView.setText(" " +
                     (position + 1) + " . " +
-                            gameScoretemp.getUserName() + " | " +
-                            gameScoretemp.getTime() + " | " +
-                            gameScoretemp.getAppleAmount()
+                    gameScoretemp.getUserName() + " | " +
+                    formatTime(gameScoretemp.getTime()) + " | " +
+                    gameScoretemp.getAppleAmount()
             );
         }
     }
@@ -65,5 +65,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             super(itemView);
             textView = itemView.findViewById(R.id.itemTv);
         }
+    }
+
+    public String formatTime(int millis) {//ממירה מילישניות לתצוגה של שעון
+        int totalSeconds = millis / 1000;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+
+        return String.format("%02d:%02d", minutes, seconds);
     }
 }

@@ -25,7 +25,7 @@ public class GameActivity extends AppCompatActivity {
     private GameLogic gamelogic;
     private String username, nextDirection = "Right";
     private LeaderBoardDAO leaderBoardDAO;
-    private GameScore gameScore;
+    private GameScore gameScore, tempGameScore;
     private CountDownTimer timer;
     private long startTime;
     private long elapsedMillis;
@@ -207,13 +207,40 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void UpdateDB() {
-        gameScore = new GameScore(formatTime(getElapsedMillis()), GameSettings.appleAmount, username);
 
-        if(leaderBoardDAO.getGameScoreByUserName(gameScore.getUserName()) == null){
-            leaderBoardDAO.insert(gameScore);
+        GameScore newScore = new GameScore(
+                getElapsedMillis(),
+                GameSettings.appleAmount,
+                username
+        );
+
+        GameScore existing = leaderBoardDAO.getGameScoreByName(username);
+
+        // אם אין רשומה קיימת
+        if (existing == null) {
+            leaderBoardDAO.insert(newScore);
+            return;
         }
-        else{
-            leaderBoardDAO.update(gameScore);
+
+        boolean isBetter = false;
+
+        // 🔥 פחות תפוחים = יותר טוב
+        if (newScore.getAppleAmount() < existing.getAppleAmount()) {
+            isBetter = true;
+        }
+
+        // אם אותה כמות תפוחים → זמן קובע
+        else if (newScore.getAppleAmount() == existing.getAppleAmount()) {
+
+            if (newScore.getTime() < existing.getTime()) {
+                isBetter = true;
+            }
+        }
+
+        // עדכון רק אם טוב יותר
+        if (isBetter) {
+            newScore.setId(existing.getId());
+            leaderBoardDAO.update(newScore);
         }
     }
 
@@ -237,7 +264,7 @@ public class GameActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public String formatTime(int millis) {
+    public String formatTime(int millis) {//ממירה מילישניות לתצוגה של שעון
         int totalSeconds = millis / 1000;
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
