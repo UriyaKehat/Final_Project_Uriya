@@ -18,7 +18,7 @@ import java.util.List;
 
 public class LeaderBoardActivity extends AppCompatActivity {
 
-    private Button btnBackToMainMenu;
+    private Button btnBackToMainMenu, btnDeleteDB;
     private TextView tvUpTop;
     private RecyclerView recyclerView;
     private List<GameScore> scoresData;
@@ -36,7 +36,15 @@ public class LeaderBoardActivity extends AppCompatActivity {
             return insets;
         });
         tvUpTop = findViewById(R.id.tvUpTop);
+        btnDeleteDB = findViewById(R.id.btnDeleteDB);
         btnBackToMainMenu = findViewById(R.id.btnBackToMainMenuFromLeaderBoard);
+        //
+        btnDeleteDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                leaderBoardDAO.deleteAll();
+            }
+        });
         btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

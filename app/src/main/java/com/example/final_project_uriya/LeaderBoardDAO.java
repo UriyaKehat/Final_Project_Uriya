@@ -16,15 +16,12 @@ public interface LeaderBoardDAO {
     @Update
     void update(GameScore gameScore);
 
-    @Delete
-    void delete(GameScore gameScore);
-
     @Query("SELECT * FROM GameScore ORDER BY appleAmount ASC, time ASC")
     List<GameScore> getAllLeaderBoards();
 
-    @Query("SELECT * FROM GameScore WHERE id = :id")
-    GameScore getGameScoreByID(int id);
-
     @Query("SELECT * FROM GameScore WHERE userName = :name LIMIT 1")
     GameScore getGameScoreByName(String name);
+
+    @Query("DELETE FROM GameScore")
+    void deleteAll();
 }
