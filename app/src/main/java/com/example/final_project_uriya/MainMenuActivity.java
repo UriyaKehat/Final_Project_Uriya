@@ -38,9 +38,11 @@ public class MainMenuActivity extends AppCompatActivity {
         btnNewGame = findViewById(R.id.btnNewGame);
         btnLeaderBoard = findViewById(R.id.btnLeaderBoard);
         btnSetting = findViewById(R.id.btnSettings);
-
-        //
         imageViewSnake.setImageResource(R.drawable.snake_text);
+        //
+
+        btnNewGame.setBackgroundColor(0xFF27AE60);
+        btnNewGame.setTextColor(Color.WHITE);
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
