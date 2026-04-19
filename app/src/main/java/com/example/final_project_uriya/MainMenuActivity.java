@@ -1,6 +1,7 @@
 package com.example.final_project_uriya;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -71,5 +72,18 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        View root = findViewById(android.R.id.content);
+
+        if (GameSettings.bgColor == -1) {
+            root.setBackgroundColor(GameSettings.DEFAULT_BG_COLOR);
+        } else {
+            root.setBackgroundColor(GameSettings.bgColor);
+        }
     }
 }

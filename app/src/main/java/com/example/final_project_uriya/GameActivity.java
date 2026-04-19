@@ -264,11 +264,16 @@ public class GameActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public String formatTime(int millis) {//ממירה מילישניות לתצוגה של שעון
-        int totalSeconds = millis / 1000;
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        return String.format("%02d:%02d", minutes, seconds);
+        View root = findViewById(android.R.id.content);
+
+        if (GameSettings.bgColor == -1) {
+            root.setBackgroundColor(GameSettings.DEFAULT_BG_COLOR);
+        } else {
+            root.setBackgroundColor(GameSettings.bgColor);
+        }
     }
 }

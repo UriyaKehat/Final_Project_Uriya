@@ -27,6 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         btnSnakeSpeed = findViewById(R.id.btnSnakeSpeed);
         appleAmount = findViewById(R.id.btnAppleAmount);
         btnBgColor = findViewById(R.id.btnBgColor);
@@ -143,6 +144,82 @@ public class SettingsActivity extends AppCompatActivity {
 
                 builder.create().show();
             }
+
         });
+        btnBgColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] colors = {
+                        "Default",
+                        "Dark Blue",
+                        "Dark Green",
+                        "Dark Red",
+                        "brown"
+                };
+
+                final int[] colorValues = {
+                        -1, // default (נגדיר בהמשך)
+                        0xFF1E3A5F, // כחול כהה
+                        0xFF1F4D3A, // ירוק כהה
+                        0xFF5A1E1E, // בורדו
+                        0xFF5A3A1E  // חום
+                };
+
+                final int[] selectedIndex = {-1};
+
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(SettingsActivity.this);
+
+                builder.setTitle("Choose Background Color");
+
+                builder.setSingleChoiceItems(colors, -1,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectedIndex[0] = which;
+                            }
+                        });
+
+                builder.setPositiveButton("Set",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if (selectedIndex[0] != -1) {
+
+                                    GameSettings.bgColor = colorValues[selectedIndex[0]];
+
+                                    View root = findViewById(android.R.id.content);
+
+                                    if (GameSettings.bgColor == -1) {
+                                        root.setBackgroundColor(GameSettings.DEFAULT_BG_COLOR);
+                                    } else {
+                                        root.setBackgroundColor(GameSettings.bgColor);
+                                    }
+
+                                    Toast.makeText(SettingsActivity.this,
+                                            "Background color updated",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                builder.setNegativeButton("Cancel", null);
+
+                builder.create().show();
+            }
+        });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        View root = findViewById(android.R.id.content);
+
+        if (GameSettings.bgColor == -1) {
+            root.setBackgroundColor(GameSettings.DEFAULT_BG_COLOR);
+        } else {
+            root.setBackgroundColor(GameSettings.bgColor);
+        }
     }
 }

@@ -96,4 +96,16 @@ public class LeaderBoardActivity extends AppCompatActivity {
         recyclerView.setAdapter(this.adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(LeaderBoardActivity.this));
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        View root = findViewById(android.R.id.content);
+
+        if (GameSettings.bgColor == -1) {
+            root.setBackgroundColor(GameSettings.DEFAULT_BG_COLOR);
+        } else {
+            root.setBackgroundColor(GameSettings.bgColor);
+        }
+    }
 }
