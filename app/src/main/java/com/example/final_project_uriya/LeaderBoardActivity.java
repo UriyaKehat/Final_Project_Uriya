@@ -1,9 +1,12 @@
 package com.example.final_project_uriya;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +45,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         btnDeleteDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                leaderBoardDAO.deleteAll();
+                ShowDeleteAllConfirmation();
             }
         });
         btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +55,40 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }
         });
 
+        SetRecyclerView();
+    }
+    private void ShowDeleteAllConfirmation() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Delete");
+        builder.setMessage("Are you sure you want to delete all data?");
+
+        // YES
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                leaderBoardDAO.deleteAll();
+                SetRecyclerView();
+
+                Toast.makeText(LeaderBoardActivity.this,
+                        "All data deleted",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // NO
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // פשוט סוגר את החלון
+            }
+        });
+
+        builder.show();
+    }
+    private void SetRecyclerView()
+    {
         leaderBoardDAO = LeaderBoardDB.getInstance(this).leaderBoardDao();
         scoresData = leaderBoardDAO.getAllLeaderBoards();
         recyclerView = findViewById(R.id.recyclerView);
