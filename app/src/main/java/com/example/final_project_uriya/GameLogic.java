@@ -137,7 +137,7 @@ public class GameLogic {
 
             //
 
-            matGameGrid[0][0] = APPLE;
+            /*matGameGrid[0][0] = APPLE;
             matGameGrid[0][1] = APPLE;
             matGameGrid[0][2] = APPLE;
             matGameGrid[0][3] = APPLE;
@@ -178,7 +178,7 @@ public class GameLogic {
             matGameGrid[3][5] = APPLE;
             matGameGrid[3][6] = APPLE;
             matGameGrid[3][7] = APPLE;
-            matGameGrid[3][9] = APPLE;
+            matGameGrid[3][9] = APPLE;*/
         }
         if (GameSettings.appleAmount == 5) {
             matGameGrid[3][8] = APPLE;
