@@ -1,5 +1,6 @@
 package com.example.final_project_uriya;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -57,13 +58,24 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {finish();}
         });
-
+        btnRestart.setBackgroundColor(0xFFE0A800);
+        btnRestart.setTextColor(Color.WHITE);
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 restartGame();
             }
         });
+        //
+
+        btnUp.setBackgroundColor(0xFF2D6CDF);
+        btnUp.setTextColor(Color.WHITE);
+        btnDown.setBackgroundColor(0xFF2D6CDF);
+        btnDown.setTextColor(Color.WHITE);
+        btnRight.setBackgroundColor(0xFF2D6CDF);
+        btnRight.setTextColor(Color.WHITE);
+        btnLeft.setBackgroundColor(0xFF2D6CDF);
+        btnLeft.setTextColor(Color.WHITE);
 
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override

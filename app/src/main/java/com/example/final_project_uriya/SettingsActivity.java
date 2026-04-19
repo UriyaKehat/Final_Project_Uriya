@@ -161,7 +161,7 @@ public class SettingsActivity extends AppCompatActivity {
                         -1, // default (נגדיר בהמשך)
                         0xFF1E3A5F, // כחול כהה
                         0xFF1F4D3A, // ירוק כהה
-                        0xFF5A1E1E, // בורדו
+                        0xFF7A2E2E, // בורדו
                         0xFF5A3A1E  // חום
                 };
 
