@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BackButtonStyle">
+        <item name="android:backgroundTint">@color/back_red</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+</resources>

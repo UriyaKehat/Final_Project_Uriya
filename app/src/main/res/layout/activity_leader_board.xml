@@ -26,7 +26,8 @@
         android:text="Back To Main Menu"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnDeleteDB"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/BackButtonStyle"/>
 
     <TextView
         android:id="@+id/tvUpTop"
