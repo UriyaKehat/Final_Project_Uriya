@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +19,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainMenuActivity extends AppCompatActivity {
 
     private Button btnNewGame, btnLeaderBoard, btnSetting;
-    private TextView tvSNAKE;
     private EditText etUserName;
+    private ImageView imageViewSnake;
 
 
     @Override
@@ -32,13 +33,14 @@ public class MainMenuActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        tvSNAKE = findViewById(R.id.tvSNAKE);
+        imageViewSnake = findViewById(R.id.imageViewSnake);
         etUserName = findViewById(R.id.etUserName);
         btnNewGame = findViewById(R.id.btnNewGame);
         btnLeaderBoard = findViewById(R.id.btnLeaderBoard);
         btnSetting = findViewById(R.id.btnSettings);
 
         //
+        imageViewSnake.setImageResource(R.drawable.snake_text);
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

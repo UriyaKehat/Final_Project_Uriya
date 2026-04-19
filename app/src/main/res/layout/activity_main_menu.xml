@@ -7,17 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainMenuActivity">
 
-    <TextView
-        android:id="@+id/tvSNAKE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SNAKE!"
-        android:textSize="45dp"
-        app:layout_constraintBottom_toTopOf="@+id/etUserName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnNewGame"
         android:layout_width="wrap_content"
@@ -48,18 +37,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLeaderBoard" />
 
+    <ImageView
+        android:id="@+id/imageViewSnake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/etUserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
     <EditText
         android:id="@+id/etUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:ems="10"
-        android:maxLength="8"
         android:hint="Enter User Name"
         android:inputType="text"
+        android:maxLength="8"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/btnNewGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSNAKE" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
