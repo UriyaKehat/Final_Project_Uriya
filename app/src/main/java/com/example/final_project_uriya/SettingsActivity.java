@@ -106,7 +106,7 @@ public class SettingsActivity extends AppCompatActivity {
                         "2 Apples",
                         "3 Apples",
                         "4 Apples",
-                        "experimental"
+                        "Experimental"
                 };
 
                 final int[] appleValues = {1, 2, 3, 4, 5};
@@ -154,7 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
                         "Dark Blue",
                         "Dark Green",
                         "Dark Red",
-                        "brown"
+                        "Brown"
                 };
 
                 final int[] colorValues = {
