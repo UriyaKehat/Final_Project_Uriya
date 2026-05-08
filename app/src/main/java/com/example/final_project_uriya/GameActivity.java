@@ -1,5 +1,6 @@
 package com.example.final_project_uriya;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //נועל רוטציית מסך
 
         username = getIntent().getStringExtra("username");
         tvTimer = findViewById(R.id.tvTimer);

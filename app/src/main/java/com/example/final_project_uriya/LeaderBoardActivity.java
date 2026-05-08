@@ -2,6 +2,7 @@ package com.example.final_project_uriya;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //נועל רוטציית מסך
+
         tvUpTop = findViewById(R.id.tvUpTop);
         btnDeleteDB = findViewById(R.id.btnDeleteDB);
         btnBackToMainMenu = findViewById(R.id.btnBackToMainMenuFromLeaderBoard);

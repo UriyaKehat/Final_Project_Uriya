@@ -1,6 +1,7 @@
 package com.example.final_project_uriya;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,8 @@ public class MainMenuActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//נועל רוטציית מסך
+
         imageViewSnake = findViewById(R.id.imageViewSnake);
         etUserName = findViewById(R.id.etUserName);
         btnNewGame = findViewById(R.id.btnNewGame);
