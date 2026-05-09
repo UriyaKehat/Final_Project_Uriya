@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Button btnSnakeSpeed, appleAmount, btnBgColor, btnBackToMainMenu;
+    private Button btnSnakeSpeed, btnAppleAmount, btnBgColor, btnBackToMainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //נועל רוטציית מסך
 
         btnSnakeSpeed = findViewById(R.id.btnSnakeSpeed);
-        appleAmount = findViewById(R.id.btnAppleAmount);
+        btnAppleAmount = findViewById(R.id.btnAppleAmount);
         btnBgColor = findViewById(R.id.btnBgColor);
         //
         btnBackToMainMenu = findViewById(R.id.btnBackToMainMenuFromSettings);
@@ -100,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        appleAmount.setOnClickListener(new View.OnClickListener() {
+        btnAppleAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
