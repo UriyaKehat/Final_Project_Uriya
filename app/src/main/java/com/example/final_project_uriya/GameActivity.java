@@ -238,7 +238,7 @@ public class GameActivity extends AppCompatActivity {
 
         boolean isBetter = false;
 
-        // 🔥 פחות תפוחים = יותר טוב
+        // פחות תפוחים = יותר טוב
         if (newScore.getAppleAmount() < existing.getAppleAmount()) {
             isBetter = true;
         }
