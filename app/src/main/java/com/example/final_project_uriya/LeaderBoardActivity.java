@@ -66,7 +66,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         builder.setTitle("Confirm Delete");
         builder.setMessage("Are you sure you want to delete all data?");
 
-        // YES
+        // כן
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -80,7 +80,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }
         });
 
-        // NO
+        // כן
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
