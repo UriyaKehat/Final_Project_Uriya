@@ -8,7 +8,6 @@ public class GameScore {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private int time;
     private int appleAmount;
     private String userName;
